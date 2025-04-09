@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="favicon.ico">
+        {{ encore_entry_link_tags('app') }}
+        {{ encore_entry_script_tags('app') }}
+    </head>
+    <body>
+        <div class="header">
+            <div class="banner-container w-full h-[65vh] bg-gradient-to-t from-[#fbc2eb] to-[#a6c1ee] bg-cover bg-center" role="banner">
+                
+                <div class="w-[85%] mx-auto flex justify-between items-center p-2">
+                    <a href="{{ url("index") }}"  class="text-[2em] ml-10 mr-auto text-white no-underline pt-4 pr-4 pb-4 pl-0 md:p-0">
+                        MVC
+                    </a>
+                    <nav>
+                        <ul class="flex justify-end py-4 list-none text-[19px]">
+                            <li class="relative inline-block mx-5 text-[19px] group"><a href="{{ url("index") }}" class="text-white no-underline group-hover:text-[#ab9dc2] transition-colors">Home</a> <span class="absolute left-0 -bottom-1 h-[3px] w-0 bg-[#ab9dc2] transition-all duration-500 group-hover:w-full"></span></li>
+                            <li class="relative inline-block mx-5 text-[19px] group"><a href="{{ path("about") }}" class="text-white no-underline group-hover:text-[#ab9dc2] transition-colors">About</a> <span class="absolute left-0 -bottom-1 h-[3px] w-0 bg-[#ab9dc2] transition-all duration-500 group-hover:w-full"></span></li>
+                            <li class="relative inline-block mx-5 text-[19px] group"><a href="{{ path("report") }}" class="text-white no-underline group-hover:text-[#ab9dc2] transition-colors">Report</a> <span class="absolute left-0 -bottom-1 h-[3px] w-0 bg-[#ab9dc2] transition-all duration-500 group-hover:w-full"></span></li>
+                            <li class="relative inline-block mx-5 text-[19px] group"><a href="{{ path("lucky") }}" class="text-white no-underline group-hover:text-[#ab9dc2] transition-colors">Lucky</a> <span class="absolute left-0 -bottom-1 h-[3px] w-0 bg-[#ab9dc2] transition-all duration-500 group-hover:w-full"></span></li>
+                        </ul>
+                    </nav>
+                </div>
+                    <h1 class="w-full relative pt-12 pr-12 pb-12 pl-0 top-[30%] -translate-y-1/2 text-center text-[#111] text-[70px] mt-20">{{name}}</h1>
+            </div>
+        </div>
+        
+        {% block content %}
+        default content
+        {% endblock %}
+    </body>
+    <footer class="bg-[#6b6a6c] inline-table justify-between h-[10vh] flex-none text-center text-white">
+        <div class="text-[0.7rem] my-5">
+            <ul class="flex justify-center py-4 list-none">
+                <li class="px-4"><a href="{{ url("index") }}" class="text-white no-underline" >Home</a></li>
+                <li class="px-4"><a href="{{ path("about") }}" class="text-white no-underline">About</a></li>
+                <li class="px-4"><a href="{{ path("report") }}" class="text-white no-underline">Report</a></li>
+                <li class="px-4"><a href="{{ path("lucky") }}" class="text-white no-underline">lucky</a></li>
+            </ul>
+        </div>
+        <div class="w-full flex items-center justify-center mb-5">
+            <p class="text-[0.9rem] text-white text-center">
+                © Pablo S 2025
+            </p>
+        </div>
+    </footer>
+</html>

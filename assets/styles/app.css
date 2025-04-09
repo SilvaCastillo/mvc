@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Global Reset & Base Styles */
+* {
+  box-sizing: border-box;
+  border: 0 none;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+/* Headings & Typography */
+h1 {
+  margin-bottom: 30px;
+  font-family: "Raleway", sans-serif;
+  font-size: 3.5em;
+}
+
+p {
+  @apply text-[17px];
+}
+
+ol,
+ul {
+  padding-left: 1.5em;
+}
+
+/* Reusable Utility Classes */
+.headline {
+  text-align: center;
+  color: #111;
+  margin-bottom: 40px;
+}
+
+.header {
+  @apply flex-none;
+}
+
+.container {
+  @apply w-[60%] block mx-auto mb-[76px] pt-[100px];
+}
+
+.content-section {
+  @apply float-left w-[70%];
+}
+
+.content-section .title {
+  @apply uppercase text-[28px];
+}
+
+.content-section .content h2 {
+  @apply mt-5 text-[#111] font-normal text-[21px];
+}
+
+.content-section .content p {
+  @apply mt-4 text-[16px] leading-[1.5];
+}
+
+.markdown h2 {
+  @apply text-[21px] text-[#111] font-normal mt-5;
+}
+
+.markdown p {
+  @apply text-[17px] leading-[1.5] mt-4;
+}
+
+.image-section {
+  @apply float-right;
+}
+
+.image-section img {
+  @apply w-[300px] h-auto;
+}

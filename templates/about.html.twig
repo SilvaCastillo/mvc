@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="image-section">
+		<img src="{{ asset("img/php.png") }}" alt="Bild på php elefant">
+	</div>
+	<div class="content-section">
+		<div class="content">
+			{{ include('content/about.markdown.twig')|markdown_to_html }}
+			<div class="button mt-[30px]">
+				<a href="https://github.com/dbwebb-se/mvc" target="_blanc" class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Kursens Git-repo</a>
+				<a href="https://github.com/SilvaCastillo/mvc" target="_blanc" class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Mitt Git-repo</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
