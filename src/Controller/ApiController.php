@@ -21,7 +21,7 @@ class ApiController extends AbstractController
     }
 
 
-        #[Route('/api/quote', name: 'quote')]
+    #[Route('/api/quote', name: 'quote')]
     public function quote(): Response
     {
 
@@ -49,7 +49,7 @@ class ApiController extends AbstractController
 
         ];
 
-        
+
         $response = new Response();
         $response->setContent(json_encode($data));
         $response->headers->set('Content-Type', 'application/json');
