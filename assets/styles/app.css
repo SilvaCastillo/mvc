@@ -46,6 +46,12 @@ ul {
   margin-bottom: 40px;
 }
 
+
+.flash-notice::before {
+  content: "ⓘ";
+  margin-right: 0.5rem;
+}
+
 .header {
   @apply flex-none;
 }

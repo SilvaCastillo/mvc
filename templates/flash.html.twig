@@ -1,0 +1,8 @@
+{# read and display all flash messages #}
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="flash-{{ label }} p-[0.53125rem] text-blue-950 bg-blue-200 border-blue-">
+            <p class="flash-notice">{{ message }}</p>
+        </div>
+    {% endfor %}
+{% endfor %}
