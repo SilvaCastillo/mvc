@@ -30,7 +30,6 @@ class Card
         ];
 
         return $data;
-
     }
 
     public function shuffleDeck(): array
@@ -42,19 +41,28 @@ class Card
         ];
 
         return $data;
-
     }
 
 
-    public function drawCard( $number = 1)
+    public function drawCard( $number = 1, array $deck = [])
     {
-        $deck = $this->createCard();
+        if (empty($deck)) {
+            $deck = $this->createCard();
+        } 
+        else {
+            $deck = $deck ;
+        }
+
+        if ($number > count($deck)) {
+            return null;
+        }
+
         $cardsPicked = array();
 
         for ($x = 0; $x < $number; $x++) {
             $randomKey = array_rand($deck, 1);
             $cardsPicked[] = $deck[$randomKey];
-            array_splice($deck, $randomKey, 1);
+            unset($deck[$randomKey]);
         }
 
         $count = count($deck);
@@ -66,7 +74,6 @@ class Card
         ];
 
         return $data;
-
     }
 
 }

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Card\Card;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CardGameController extends AbstractController
@@ -28,11 +29,13 @@ class CardGameController extends AbstractController
 
 
     #[Route("/card/deck", name: "card_deck")]
-    public function deck(): Response
+    public function deck(SessionInterface $session): Response
     {
-
-        // $deck = new \App\Card\deck();
-        $deck = $this->card->deck(); 
+        if (!$session->has("deck")) {
+            $deck = $this->card->deck();
+        } else {
+            $deck = $session->get("deck");
+        }
 
         $data = [
             'name' => 'Card Deck',
@@ -42,11 +45,14 @@ class CardGameController extends AbstractController
         return $this->render('card/deck.html.twig', $data);
     }
 
+
     #[Route("/card/deck/shuffle", name: "deck_shuffle")]
-    public function deckShuffle(): Response
+    public function deckShuffle(SessionInterface $session): Response
     {
 
         $shuffleDeck = $this->card->shuffleDeck();
+
+        $session->set('deck', $shuffleDeck);
 
         $data = [
             'name' => 'Card Deck',
@@ -58,10 +64,24 @@ class CardGameController extends AbstractController
 
 
     #[Route("/card/deck/draw", name: "card_draw")]
-    public function deckDraw(): Response
+    public function deckDraw(SessionInterface $session): Response
     {
 
-        $drawCard = $this->card->drawCard();
+        if (!$session->has("deck")) {
+            $drawCard = $this->card->drawCard();
+        } else {
+            $drawData = $session->get("deck");
+            $deck = $drawData['deck']; 
+            $drawCard = $this->card->drawCard(1, $deck);
+
+            if ($drawCard === null) {
+                $session->set('deck', $drawCard);
+                $this->addFlash('warning', 'No more cards left!');
+                return $this->redirectToRoute('card_deck'); 
+            }
+        }
+
+        $session->set('deck', $drawCard);
 
         $data = [
             'name' => 'Card Draw',
@@ -72,13 +92,25 @@ class CardGameController extends AbstractController
     }
 
 
-
     #[Route("/card/deck/draw/{number<\d+>}", name: "draw_amount")]
-    public function deckDrawMulti(int $number): Response
+    public function deckDrawMulti(SessionInterface $session, int $number): Response
     {
 
+        if (!$session->has("deck")) {
+            $drawCard = $this->card->drawCard($number);
+        } else {
+            $drawData = $session->get("deck");
+            $deck = $drawData['deck']; 
+            $drawCard = $this->card->drawCard($number, $deck);
 
-        $drawCard = $this->card->drawCard($number);
+            if ($drawCard === null) {
+                $session->set('deck', $drawCard);
+                $this->addFlash('warning', 'No more cards left!');
+                return $this->redirectToRoute('card_deck'); 
+            }
+        }
+
+        $session->set('deck', $drawCard);
 
         $data = [
             'name' => 'Card Draw',
