@@ -60,8 +60,29 @@ class CardGameController extends AbstractController
     #[Route("/card/deck/draw", name: "card_draw")]
     public function deckDraw(): Response
     {
+
+        $drawCard = $this->card->drawCard();
+
         $data = [
-            'name' => 'Card Draw'
+            'name' => 'Card Draw',
+            'card' => $drawCard,
+        ];
+
+        return $this->render('card/draw.html.twig', $data);
+    }
+
+
+
+    #[Route("/card/deck/draw/{number<\d+>}", name: "draw_amount")]
+    public function deckDrawMulti(int $number): Response
+    {
+
+
+        $drawCard = $this->card->drawCard($number);
+
+        $data = [
+            'name' => 'Card Draw',
+            'card' => $drawCard,
         ];
 
         return $this->render('card/draw.html.twig', $data);

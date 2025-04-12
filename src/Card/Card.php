@@ -46,4 +46,27 @@ class Card
     }
 
 
+    public function drawCard( $number = 1)
+    {
+        $deck = $this->createCard();
+        $cardsPicked = array();
+
+        for ($x = 0; $x < $number; $x++) {
+            $randomKey = array_rand($deck, 1);
+            $cardsPicked[] = $deck[$randomKey];
+            array_splice($deck, $randomKey, 1);
+        }
+
+        $count = count($deck);
+
+        $data = [
+            'card' => $cardsPicked,
+            'cardsRemaining' => $count,
+            'deck' => $deck,
+        ];
+
+        return $data;
+
+    }
+
 }
