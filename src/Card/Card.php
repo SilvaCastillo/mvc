@@ -5,75 +5,28 @@ namespace App\Card;
 
 class Card
 {
+    private string $value;
+    private string $suit;
 
-    public function createCard()
+    public function __construct(string $value, string $suit)
     {
-        $values = array('2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A');
-        $suits = array('S', 'H', 'D', 'C');
-        $cards = array();
-        foreach ($suits as $suit) {
-			foreach ($values as $value) {
-				$cards[] = $value . $suit;
-			}
-		};
-
-        return $cards;
+        $this->value = $value;
+        $this->suit = $suit;
     }
 
-
-    public function deck(): array
+    public function getValue(): int
     {
-        $deck = $this->createCard();
-
-        $data = [
-            'deck' => $deck
-        ];
-
-        return $data;
+        return $this->value;
     }
 
-    public function shuffleDeck(): array
+    public function getSuit(): int
     {
-        $deck = $this->createCard();
-        shuffle($deck);
-        $data = [
-            'deck' => $deck
-        ];
-
-        return $data;
+        return $this->suit;
     }
 
-
-    public function drawCard( $number = 1, array $deck = [])
+    public function getAsString(): string
     {
-        if (empty($deck)) {
-            $deck = $this->createCard();
-        } 
-        else {
-            $deck = $deck ;
-        }
-
-        if ($number > count($deck)) {
-            return null;
-        }
-
-        $cardsPicked = array();
-
-        for ($x = 0; $x < $number; $x++) {
-            $randomKey = array_rand($deck, 1);
-            $cardsPicked[] = $deck[$randomKey];
-            unset($deck[$randomKey]);
-        }
-
-        $count = count($deck);
-
-        $data = [
-            'card' => $cardsPicked,
-            'cardsRemaining' => $count,
-            'deck' => $deck,
-        ];
-
-        return $data;
+        return $this->value . $this->suit;
     }
 
 }
