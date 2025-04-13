@@ -25,16 +25,17 @@ class CardGameController extends AbstractController
     public function deck(SessionInterface $session): Response
     {
         if (!$session->has("deck")) {
-            $cards = new DeckOfCards();
-            $deck = $cards->getDeck();
-            $session->set('deck', $cards);
+            $deck = new DeckOfCards();
+            $session->set('deck', $deck);
         } else {
             $deck = $session->get("deck");
         }
 
+        $getDeck = $deck->getDeck();
+
         $data = [
             'name' => 'Card Deck',
-            'deck' => $deck,
+            'deck' => $getDeck,
         ];
 
         return $this->render('card/deck.html.twig', $data);
@@ -44,15 +45,15 @@ class CardGameController extends AbstractController
     public function deckShuffle(SessionInterface $session): Response
     {
 
-        $cards = new DeckOfCards();
-        $shuffleDeck = $cards->shuffle();
-        $deck = $cards->getDeck();
+        $deck = new DeckOfCards();
+        $deck->shuffle();
+        $getDeck = $deck->getDeck();
 
-        $session->set('deck', $cards);
+        $session->set('deck', $deck);
 
         $data = [
             'name' => 'Card Deck',
-            'deck' => $deck,
+            'deck' => $getDeck,
         ];
 
         return $this->render('card/deck.html.twig', $data);
@@ -63,26 +64,28 @@ class CardGameController extends AbstractController
     {
 
         if (!$session->has("deck")) {
-            $cards = new DeckOfCards();
-            $deck = $cards->getDeck();
+            $deck = new DeckOfCards();
         } else {
             $deck = $session->get("deck");
+        }
 
-            $drawCard = $deck->draw();
+        $cardDrawn = $deck->draw();
 
-            if ($drawCard === null) {
-                $session->set('deck', $deck);
-                $this->addFlash('warning', 'No more cards left!');
-                return $this->redirectToRoute('card_deck'); 
-            }
+        if ($cardDrawn === null) {
+            $session->set('deck', $deck);
+            $this->addFlash('warning', 'No more cards left!');
+            return $this->redirectToRoute('card_deck'); 
         }
         
+
+        $cardsAsString = array();
+        $cardsAsString[] = $cardDrawn[0]->getAsString();
         $session->set('deck', $deck);
         $remainingCards = $deck->getRemaining();
 
         $data = [
             'name' => 'Card Draw',
-            'card' => $drawCard,
+            'card' => $cardsAsString,
             'remainingCards' => $remainingCards,
         ];
 
@@ -94,17 +97,17 @@ class CardGameController extends AbstractController
     {
 
         if (!$session->has("deck")) {
-            $cards = new DeckOfCards();
-            $deck = $cards->getDeck();
+            $deck = new DeckOfCards();
         } else {
             $deck = $session->get("deck");
-            $drawCard = $deck->draw($number);
+        }
 
-            if ($drawCard === null) {
-                $session->set('deck', $deck);
-                $this->addFlash('warning', 'No more cards left!');
-                return $this->redirectToRoute('card_deck'); 
-            }
+        $cardsDrawn = $deck->draw($number);
+
+        if ($cardsDrawn === null) {
+            $session->set('deck', $deck);
+            $this->addFlash('warning', 'No more cards left!');
+            return $this->redirectToRoute('card_deck'); 
         }
 
         $session->set('deck', $deck);
@@ -112,7 +115,7 @@ class CardGameController extends AbstractController
 
         $data = [
             'name' => 'Card Draw',
-            'card' => $drawCard,
+            'card' => $cardsDrawn,
             'remainingCards' => $remainingCards,
         ];
 

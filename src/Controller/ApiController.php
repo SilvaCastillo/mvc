@@ -61,12 +61,19 @@ class ApiController extends AbstractController
 
 
     #[Route('/api/deck', name: 'deck')]
-    public function apiDeck(): JsonResponse
+    public function apiDeck(SessionInterface $session): JsonResponse
     {
-        $cards = new DeckOfCards();
-        $deck = $cards->getDeck();
+        if (!$session->has("deck")) {
+            $deck = new DeckOfCards();
+            $session->set('deck', $deck);
+        } else {
+            $deck = $session->get("deck");
+        }
+
+        $getDeck = $deck->getDeck();
+
         $cardsAsString = array();
-        foreach ($deck as $card) {
+        foreach ($getDeck as $card) {
             $cardsAsString[] = $card->getAsString();
         }
 
@@ -80,15 +87,17 @@ class ApiController extends AbstractController
 
 
     #[Route('/api/deck/shuffle', name: 'api_shuffle')]
-    public function apiDeckShuffle(): JsonResponse
+    public function apiDeckShuffle(SessionInterface $session): JsonResponse
     {
-        $cards = new DeckOfCards();
-        $cards->shuffle();
-        $deck = $cards->getDeck();
+        $deck = new DeckOfCards();
+        $deck->shuffle();
+        $getDeck = $deck->getDeck();
         $cardsAsString = array();
-        foreach ($deck as $card) {
+        foreach ($getDeck as $card) {
             $cardsAsString[] = $card->getAsString();
         }
+
+        $session->set('deck', $deck);
 
         $data = [
             'name' => 'Card Deck',
@@ -114,8 +123,10 @@ class ApiController extends AbstractController
 
         if ($cardDrawn === null) {
             $session->set('deck', $deck);
-            $this->addFlash('warning', 'No more cards left!');
-            return $this->redirectToRoute('card_deck'); 
+            return $this->json([
+                'success' => false,
+                'message' => 'No more cards left!',
+            ]);
         }
 
 
@@ -149,8 +160,10 @@ class ApiController extends AbstractController
 
         if ($cardsDrawn === null) {
             $session->set('deck', $deck);
-            $this->addFlash('warning', 'No more cards left!');
-            return $this->redirectToRoute('card_deck'); 
+            return $this->json([
+                'success' => false,
+                'message' => 'No more cards left!',
+            ]);
         }
 
         $cardsAsString = array();
@@ -168,6 +181,6 @@ class ApiController extends AbstractController
             'remainingCards' => $remainingCards,
         ];
 
-        return $this->render('card/draw.html.twig', $data);
+        return $this->json($data);
     }
 }
