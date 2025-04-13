@@ -14,12 +14,12 @@ class Card
         $this->suit = $suit;
     }
 
-    public function getValue(): int
+    public function getValue(): string
     {
         return $this->value;
     }
 
-    public function getSuit(): int
+    public function getSuit(): string
     {
         return $this->suit;
     }
