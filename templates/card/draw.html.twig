@@ -5,10 +5,18 @@
 {% block content %}
 
 <div class="container">
-	<div class="content-section">
-		<div class="content">
-			<h3>{{dump(card)}}</h3>
-			<h3>Cards left: {{dump(remainingCards)}}</h3>
+	<div class="game-section">
+		<div class="card-table">
+			{% for card in cards %}
+				<div class="inline-block w-[80px] text-center bg-white border border-black rounded-lg border-solid m-8 py-8 px-6">
+					{% if '♥' in card or '♦' in card %}
+					<p class="text-red-600 text-xl">{{card}}</p>
+				{% else %}
+					<p class="text-xl">{{card}}</p>
+				{% endif %}
+				</div>
+			{% endfor %}
+			<h3> <strong>Cards left:</strong> {{remainingCards}}</h3>
 		</div>
 		
 	</div>
