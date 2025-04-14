@@ -2,8 +2,7 @@
 
 namespace App\Card;
 
-use App\Card\Card;
-
+use App\Card\CardGraphic;
 
 class DeckOfCards
 {
@@ -21,7 +20,7 @@ class DeckOfCards
 
         foreach ($suits as $suit) {
             foreach ($values as $value) {
-                $this->cards[] = new Card($value, $suit);
+                $this->cards[] = new CardGraphic($value, $suit);
             }
         }
     }

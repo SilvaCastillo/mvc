@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-// use App\Card\Card;
 use App\Card\DeckOfCards;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,9 +32,14 @@ class CardGameController extends AbstractController
 
         $getDeck = $deck->getDeck();
 
+        $cardsAsString = array();
+        foreach ($getDeck as $card) {
+            $cardsAsString[] = $card->getAsString();
+        }
+
         $data = [
             'name' => 'Card Deck',
-            'deck' => $getDeck,
+            'deck' => $cardsAsString,
         ];
 
         return $this->render('card/deck.html.twig', $data);
@@ -51,9 +55,14 @@ class CardGameController extends AbstractController
 
         $session->set('deck', $deck);
 
+        $cardsAsString = array();
+        foreach ($getDeck as $card) {
+            $cardsAsString[] = $card->getAsString();
+        }
+
         $data = [
             'name' => 'Card Deck',
-            'deck' => $getDeck,
+            'deck' => $cardsAsString,
         ];
 
         return $this->render('card/deck.html.twig', $data);
@@ -85,7 +94,7 @@ class CardGameController extends AbstractController
 
         $data = [
             'name' => 'Card Draw',
-            'card' => $cardsAsString,
+            'cards' => $cardsAsString,
             'remainingCards' => $remainingCards,
         ];
 
@@ -110,12 +119,18 @@ class CardGameController extends AbstractController
             return $this->redirectToRoute('card_deck'); 
         }
 
+        $cardsAsString = array();
+        foreach ($cardsDrawn as $card) {
+            $cardsAsString[] = $card->getAsString();
+        }
+
+
         $session->set('deck', $deck);
         $remainingCards = $deck->getRemaining();
 
         $data = [
             'name' => 'Card Draw',
-            'card' => $cardsDrawn,
+            'cards' => $cardsAsString,
             'remainingCards' => $remainingCards,
         ];
 
