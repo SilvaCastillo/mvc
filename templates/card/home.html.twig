@@ -10,9 +10,9 @@
 			{{ include('content/cardStart.markdown.twig')|markdown_to_html }}
 
 			<div class="button mt-[30px]">
-				<a href="{{ path("card_deck") }}" target="_blanc" class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">See deck</a>
-				<a href={{ path("deck_shuffle") }} target="_blanc" class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Shuffle deck</a>
-				<a href={{ path("card_draw") }} target="_blanc" class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Draw card</a>
+				<a href="{{ path("card_deck") }}" class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">See deck</a>
+				<a href={{ path("deck_shuffle") }} class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Shuffle deck</a>
+				<a href={{ path("card_draw") }} class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Draw card</a>
 			</div>
 		</div>
 	</div>
