@@ -2,7 +2,6 @@
 
 namespace App\Card;
 
-
 use App\Card\Card;
 
 class CardGraphic extends Card

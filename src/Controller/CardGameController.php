@@ -83,9 +83,9 @@ class CardGameController extends AbstractController
         if ($cardDrawn === null) {
             $session->set('deck', $deck);
             $this->addFlash('warning', 'No more cards left!');
-            return $this->redirectToRoute('card_deck'); 
+            return $this->redirectToRoute('card_deck');
         }
-        
+
 
         $cardsAsString = array();
         $cardsAsString[] = $cardDrawn[0]->getAsString();
@@ -116,7 +116,7 @@ class CardGameController extends AbstractController
         if ($cardsDrawn === null) {
             $session->set('deck', $deck);
             $this->addFlash('warning', 'No more cards left!');
-            return $this->redirectToRoute('card_deck'); 
+            return $this->redirectToRoute('card_deck');
         }
 
         $cardsAsString = array();

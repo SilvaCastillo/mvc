@@ -2,7 +2,6 @@
 
 namespace App\Card;
 
-
 class Card
 {
     private string $value;
