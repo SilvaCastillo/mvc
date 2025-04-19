@@ -1,4 +1,10 @@
 Card Game
 ------------------------------
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+Kodstrukturen baseras på tre huvudkomponenter: Card, CardGraphic och DeckOfCards.
+
+Card är basklassen och innehåller värdet och färgen för ett visst kort. Den erbjuder metoder för att hämta dessa, samt en metod för att visa kortet som text.
+CardGraphic ärver från Card och lägger till visuell representation av färgen (♥, ♦, ♠, ♣). Den skriver över getAsString() för att visa kortet snyggare, till exempel "7♥".
+DeckOfCards skapar och hanterar en hel kortlek bestående av CardGraphic-objekt. Den har metoder för att blanda-, dra kort och kontrollera hur många kort som finns kvar.
+
+Relationen mellan klasserna är följande: CardGraphic ärver från Card och DeckOfCards innehåller flera CardGraphic-objekt.
