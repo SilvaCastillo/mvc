@@ -10,6 +10,17 @@ Efter att ha gjort övningen tyckte jag att det var lätt att förstå kodstrukt
 <a id="kmom02"></a>Kmom02
 ------------------------------
 
+Arv är när en subklass ärver egenskaper och metoder från en annan klass. Komposition innebär att en klass använder andra objekt istället för att ärva från dem. Det innebär att koden blir mer flexibel. Interface definierar vilka metoder en klass måste implementera, men ger inte själva implementationen. Det används för att säkerställa att olika klasser följer en viss struktur. Traits används för att dela metoder mellan klasser utan arv. Det är praktiskt när flera klasser ska återanvända samma kod, men inte kan ärva samma bas.
+
+Jag började med att skapa Card-klassen. Jag gjorde ett misstag då jag av misstag byggde en hel kortlek i den, istället för ett enskilt kort. Jag upptäckte det efter att jag redan hade implementerat flera funktioner. Dessa implementeringar flyttade jag sedan över till DeckOfCards-klassen, och lade in de korrekta funktionerna i Card. Card-klassen anropades därefter i createDeck() i DeckOfCards.
+
+Jag kontrollerade att allt fungerade som det skulle. Det gällde att jag kunde visa korrekt kortleksdata på sidan inklusive att shuffle-funktionen fungerade, d.v.s. att hela leken gick att se och att det gick att dra ett eller flera kort. Därefter gick jag vidare och skapade CardGraphic-klassen. Den gav varje kort rätt symbol (♥, ♦, etc). Därefter arbetade jag med CSS för att ge korten en enklare men tydlig design.
+
+Jag blev särskilt nöjd med hur jag implementerade draw()-funktionen. Jag planerade från början att den skulle kunna hantera både att dra ett enda kort och flera kort, utan att behöva duplicera kod. Jag lade även till en kontroll som kollar om användaren försöker dra fler kort än vad som finns kvar i leken. I så fall returneras null istället för att dra några kort alls. Jag hade samma tanke när jag gjorde mina template-filer. Jag ville ha en gemensam vy för både enkel och flera dragningar, och samma sak gäller för deck och shuffle. Det gav bättre struktur i projektet.
+
+Det jag är medveten om kan förbättras i koden är hanteringen av kort, d.v.s. när användaren försöker dra för många kort. Idag returneras bara null och användaren skickas tillbaka till deck-vyn. Jag hade hellre velat att systemet drog så många kort som möjligt (till ett max-antal) om användaren försöker dra fler än vad som finns kvar.
+
+Jag tycker att det går bra. Symfony är inte så svårt att få ett grepp om. Jag kollar mycket på exempel-koden vi får och söker upp om det är något jag undrar över. Dessutom har det gått bra att programmera OOP. Jag råkade göra fel i card-class genom att jag först byggde hela deckofcards där, men skapade senare en egen klass för det.
 
 <a id="kmom03"></a>Kmom03
 ------------------------------
