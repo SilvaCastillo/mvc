@@ -65,9 +65,12 @@ class ApiController extends AbstractController
         if (!$session->has("deck")) {
             $deck = new DeckOfCards();
             $session->set('deck', $deck);
-        } else {
-            $deck = $session->get("deck");
         }
+        // else {
+        //     $deck = $session->get("deck");
+        // }
+
+        $deck = $session->get("deck");
 
         $getDeck = $deck->getDeck();
 
@@ -113,11 +116,14 @@ class ApiController extends AbstractController
 
         if (!$session->has("deck")) {
             $deck = new DeckOfCards();
-            $getDeck = $deck->getDeck();
-        } else {
-            $deck = $session->get("deck");
-        }
+            $session->set('deck', $deck);
+            // $getDeck = $deck->getDeck();
+        } 
+        // else {
+        //     $deck = $session->get("deck");
+        // }
 
+        $deck = $session->get("deck");
         $cardDrawn = $deck->draw();
 
         if ($cardDrawn === null) {
@@ -150,11 +156,13 @@ class ApiController extends AbstractController
 
         if (!$session->has("deck")) {
             $deck = new DeckOfCards();
-            $getDeck = $deck->getDeck();
-        } else {
-            $deck = $session->get("deck");
-        }
+            // $getDeck = $deck->getDeck();
+        } 
+        // else {
+        //     $deck = $session->get("deck");
+        // }
 
+        $deck = $session->get("deck");
         $cardsDrawn = $deck->draw($number);
 
         if ($cardsDrawn === null) {

@@ -26,10 +26,9 @@ class CardGameController extends AbstractController
         if (!$session->has("deck")) {
             $deck = new DeckOfCards();
             $session->set('deck', $deck);
-        } else {
-            $deck = $session->get("deck");
         }
 
+        $deck = $session->get("deck");
         $getDeck = $deck->getDeck();
 
         $cardsAsString = array();
@@ -74,10 +73,10 @@ class CardGameController extends AbstractController
 
         if (!$session->has("deck")) {
             $deck = new DeckOfCards();
-        } else {
-            $deck = $session->get("deck");
+            $session->set('deck', $deck);
         }
 
+        $deck = $session->get("deck");
         $cardDrawn = $deck->draw();
 
         if ($cardDrawn === null) {
@@ -107,10 +106,10 @@ class CardGameController extends AbstractController
 
         if (!$session->has("deck")) {
             $deck = new DeckOfCards();
-        } else {
-            $deck = $session->get("deck");
+            $session->set('deck', $deck);
         }
 
+        $deck = $session->get("deck");
         $cardsDrawn = $deck->draw($number);
 
         if ($cardsDrawn === null) {

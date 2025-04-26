@@ -28,7 +28,7 @@ class SessionController extends AbstractController
     public function delete(SessionInterface $session): Response
     {
 
-        $deletedSession = $session->clear();
+        $session->clear();
         $this->addFlash('success', 'Session has been deleted.');
 
         return $this->redirectToRoute('session_show');
