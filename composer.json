@@ -1,4 +1,6 @@
 {
+    "name": "pasi21/mvc",
+    "description": "For the mvc course.",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
