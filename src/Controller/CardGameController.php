@@ -28,6 +28,7 @@ class CardGameController extends AbstractController
             $session->set('deck', $deck);
         }
 
+        /** @var DeckOfCards $deck */
         $deck = $session->get("deck");
         $getDeck = $deck->getDeck();
 
@@ -76,6 +77,7 @@ class CardGameController extends AbstractController
             $session->set('deck', $deck);
         }
 
+        /** @var DeckOfCards $deck */
         $deck = $session->get("deck");
         $cardDrawn = $deck->draw();
 
@@ -109,6 +111,7 @@ class CardGameController extends AbstractController
             $session->set('deck', $deck);
         }
 
+        /** @var DeckOfCards $deck */
         $deck = $session->get("deck");
         $cardsDrawn = $deck->draw($number);
 

@@ -6,6 +6,9 @@ use App\Card\CardGraphic;
 
 class DeckOfCards
 {
+    /**
+     * @var CardGraphic[]
+     */
     private array $cards = [];
 
     public function __construct()
@@ -25,6 +28,9 @@ class DeckOfCards
         }
     }
 
+    /**
+     * @return CardGraphic[]
+     */
     public function getDeck(): array
     {
         return $this->cards;
@@ -35,7 +41,10 @@ class DeckOfCards
         shuffle($this->cards);
     }
 
-    public function draw(int $number = 1)
+    /**
+     * @return CardGraphic[]|null
+    */
+    public function draw(int $number = 1): ?array
     {
         if ($number > count($this->cards)) {
             return null;

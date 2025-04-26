@@ -6,7 +6,10 @@ use App\Card\Card;
 
 class CardGraphic extends Card
 {
-    private $representation = [
+    /**
+     * @var array<string, string>
+    */
+    private array $representation = [
         'H' => '♥',
         'D' => '♦',
         'S' => '♠',

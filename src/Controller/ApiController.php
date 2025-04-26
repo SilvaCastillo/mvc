@@ -50,12 +50,7 @@ class ApiController extends AbstractController
 
         ];
 
-
-        $response = new Response();
-        $response->setContent(json_encode($data));
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
+        return $this->json($data);
     }
 
 
@@ -66,12 +61,9 @@ class ApiController extends AbstractController
             $deck = new DeckOfCards();
             $session->set('deck', $deck);
         }
-        // else {
-        //     $deck = $session->get("deck");
-        // }
 
+        /** @var DeckOfCards $deck */
         $deck = $session->get("deck");
-
         $getDeck = $deck->getDeck();
 
         $cardsAsString = array();
@@ -117,12 +109,9 @@ class ApiController extends AbstractController
         if (!$session->has("deck")) {
             $deck = new DeckOfCards();
             $session->set('deck', $deck);
-            // $getDeck = $deck->getDeck();
-        } 
-        // else {
-        //     $deck = $session->get("deck");
-        // }
+        }
 
+        /** @var DeckOfCards $deck */
         $deck = $session->get("deck");
         $cardDrawn = $deck->draw();
 
@@ -156,12 +145,10 @@ class ApiController extends AbstractController
 
         if (!$session->has("deck")) {
             $deck = new DeckOfCards();
-            // $getDeck = $deck->getDeck();
-        } 
-        // else {
-        //     $deck = $session->get("deck");
-        // }
+            $session->set('deck', $deck);
+        }
 
+        /** @var DeckOfCards $deck */
         $deck = $session->get("deck");
         $cardsDrawn = $deck->draw($number);
 
