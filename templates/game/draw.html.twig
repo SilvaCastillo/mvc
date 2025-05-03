@@ -1,0 +1,53 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Card Game{% endblock %}
+
+{% block content %}
+
+<div class="container">
+	<div class="game-section">
+		<div class="card-table">
+			{% if gameStatus == false %}
+				<h3><strong>{{ winner }}</strong></h3>
+			{% endif %}
+			<h2>Player</h2>
+			<h3>{{ playerDeckValue }}</h3>
+			{% for card in playerCards %}
+				<div class="inline-block w-[80px] text-center bg-white border border-black rounded-lg border-solid m-8 py-8 px-6">
+					{% if '♥' in card or '♦' in card %}
+					<p class="text-red-600 text-xl">{{card}}</p>
+				{% else %}
+					<p class="text-xl">{{card}}</p>
+				{% endif %}
+				</div>
+			{% endfor %}
+			<h2>bank</h2>
+			<h3>{{ bankDeckValue }}</h3>
+			{% for card in bankCards %}
+				<div class="inline-block w-[80px] text-center bg-white border border-black rounded-lg border-solid m-8 py-8 px-6">
+					{% if '♥' in card or '♦' in card %}
+					<p class="text-red-600 text-xl">{{card}}</p>
+				{% else %}
+					<p class="text-xl">{{card}}</p>
+				{% endif %}
+				</div>
+			{% endfor %}
+
+			<div class="button mt-[30px]">
+				{% if gameStatus == true %}
+					<a href="{{ path("game") }}" class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Draw card</a>
+				
+					<a href={{ path("stand") }} class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Stay</a>
+				{% endif %}
+				{% if gameStatus == false %}
+					<a href={{ path("restart_game") }} class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Play Again</a>
+				{% endif %}
+			</div>
+		</div>
+
+
+	</div>
+</div>
+
+{% endblock %}
+

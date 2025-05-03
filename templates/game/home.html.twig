@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Card Game 21{% endblock %}
+
+{% block content %}
+
+<div class="container">
+	<div class="content-section">
+		<div class="content">
+			{{ include('content/21GameInfo.markdown.twig')|markdown_to_html }}
+
+			<div class="button mt-[30px]">
+				<a href="{{ path("game") }}" class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Start game</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
