@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Dokumentation{% endblock %}
+
+{% block content %}
+
+<div class="container">
+	<div class="image-section">
+		<h2>Flödesschema</h2>
+		<img src="{{ asset("img/Flowchart-21.png") }}" alt="Flödesschema">
+	</div>
+	<div class="content-section">
+		<div class="content">
+			{{ include('content/game/doc.markdown.twig')|markdown_to_html }}
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+

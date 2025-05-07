@@ -1,0 +1,46 @@
+
+### Pseudokod – 21-kortspel
+
+```plaintext
+START
+
+Skapa en gemensam kortlek
+Blanda kortleken
+
+Spelaren drar första kortet
+Visa spelarens poäng
+
+WHILE spelaren vill dra kort AND poängen < 21:
+    Spelaren drar kort
+    Visa spelarens poäng
+
+IF spelarens poäng > 21:
+    Vissar "Banken vinner"
+    Gå till SLUT
+
+ELSE:
+    // Bankens tur
+    WHILE bankens poäng < 17:
+        Banken drar kort
+        Visa bankens poäng
+
+    IF bankens poäng > 21:
+        Visar "Spelaren vinner"
+    ELSE:
+        IF bankens poäng >= spelarens poäng:
+            Visar "Banken vinner"
+        ELSE:
+            Visar "Spelaren vinner"
+
+SLUT
+```
+
+
+Jag anser att jag inte behöver skapa en ny klass specifikt för 21-spelet.
+De klasser jag redan har är tillräckliga för att lösa spelet enligt min plan.
+Jag använder sessioner för att spara både kortleken och de dragna korten för spelaren och banken, spelets logik hanteras i kontrollern.
+
+Existerande klasser:
+* DeckOfCards - Hantera kortleken och dra kort från den.
+* Card - Representerar ett spelkort med färg och värde.
+* CardGraphic - Hantera utseendet för spelkort

@@ -7,10 +7,11 @@
 <div class="container">
 	<div class="content-section">
 		<div class="content">
-			{{ include('content/21GameInfo.markdown.twig')|markdown_to_html }}
+			{{ include('content/game/21GameInfo.markdown.twig')|markdown_to_html }}
 
 			<div class="button mt-[30px]">
-				<a href="{{ path("game") }}" class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Start game</a>
+				<a href="{{ path("game_init") }}" class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Start game</a>
+				<a href="{{ path("doc") }}" class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Dokumentation</a>
 			</div>
 		</div>
 	</div>
