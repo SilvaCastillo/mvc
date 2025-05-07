@@ -25,6 +25,17 @@ Jag tycker att det går bra. Symfony är inte så svårt att få ett grepp om. J
 <a id="kmom03"></a>Kmom03
 ------------------------------
 
+Jag tycker att det kändes bra att arbeta med flödesdiagram eftersom det hjälpte mig att få en tydlig överblick över hur spelet skulle fungera. Pseudokoden kändes lite onödig för mig, men det kan bero på att jag gjorde flödesdiagrammet först. Jag kan tänka mig att pseudokoden kan vara mer användbar om man börjar med den innan man gör flödesdiagrammet. Det kan hjälpa till att strukturera tankarna tidigt i processen. Överlag tror jag att båda metoderna kan stödja problemlösning och hjälpa till att planera koden mer effektivt.
+
+Jag löste uppgiften genom att använda sessions för att spara spelets status, d.v.s. vilka kort som dragits för spelare och bank, om det är spelarens tur, om spelet har börjat och poäng för varje sida. Till en början lade jag logiken i controllern, men det blev snabbt för mycket kod. Jag valde då att bryta ut logiken till en separat klass, Game21. Det gjorde koden mer strukturerad och lättläst.
+I Game21-klassen använde jag sessions direkt i konstruktorn, vilket gör det enkelt att hantera spelets tillstånd inom klassen. Jag har även försökt undvika upprepning i koden, till exempel genom att låta funktionen drawCardForPlayer() ta ett argument som avgör om det är spelaren eller banken som ska få ett kort. Då blir funktionen flexibel och återanvändbar.
+En möjlig förbättring med min uppgift hade varit att skapa en separat klass som representerar spelet som ett objekt, med all speldata samlad där. Men i det här fallet såg jag inte någon tydlig fördel med det. Ytterligare förbättringar skulle kunna göras genom att flytta fler kontrollstrukturer från controllern till egna metoder för att minska kodens komplexitet.
+
+Överlag är jag nöjd med min lösning, särskilt hur jag lyckades strukturera om koden för bättre läsbarhet och återanvändbarhet.
+
+Det känns bra att arbeta med Symfony. Jag trodde att det skulle bli svårare, men det har gått bra. Det var relativt lätt att sätta mig in i ramverket utan några större problem, och det finns rätt mycket dokumentation på nätet att ta hjälp av om man kör fast.
+
+Jag lärde mig vad pseudokod är som jag tror att jag inte hade hört talas om tidigare. Som jag nämnde tidigare kändes det lite onödigt att använda det i mitt fall, eftersom jag redan hade gjort ett flödesdiagram. Dock förstår jag att pseudokod kan vara ett bra komplement, helst om man använder det innan man gör ett flödesdiagram.
 
 <a id="kmom04"></a>Kmom04
 ------------------------------
