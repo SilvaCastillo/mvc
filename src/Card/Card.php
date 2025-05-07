@@ -7,6 +7,9 @@ class Card
     private string $value;
     private string $suit;
 
+    /**
+     * @var array<string, int>
+    */
     private array $representation = [
         'J' => 11,
         'Q' => 12,

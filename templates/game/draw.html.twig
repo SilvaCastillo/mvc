@@ -35,12 +35,12 @@
 
 			<div class="button mt-[30px]">
 				{% if gameStatus == true %}
-					<a href="{{ path("game") }}" class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Draw card</a>
+					<a href="{{ path("game_play") }}" class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Draw card</a>
 				
 					<a href={{ path("stand") }} class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Stay</a>
 				{% endif %}
 				{% if gameStatus == false %}
-					<a href={{ path("restart_game") }} class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Play Again</a>
+					<a href={{ path("game_init") }} class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Play Again</a>
 				{% endif %}
 			</div>
 		</div>

@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Card\DeckOfCards;
 use App\Card\CardGraphic;
 
+use App\game\Game21;
+
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -13,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GameController extends AbstractController
 {
     #[Route('/game', name: 'game_info')]
-    public function apiGame(): Response
+    public function gameRules(): Response
     {
 
         $data = [
@@ -23,94 +26,64 @@ class GameController extends AbstractController
         return $this->render('game/home.html.twig', $data);
     }
 
-    /**
-    * @SuppressWarnings("ElseExpression")
-    * @SuppressWarnings("CyclomaticComplexity")
-    */
-    #[Route('/game/init', name: 'game')]
-    public function gameInit(SessionInterface $session): Response
+
+    #[Route('/game/init', name: 'game_init')]
+    public function gameInit(Game21 $game21): Response
     {
-        $players = array("Player", "Bank");
-        $drawDeckBank = $session->get('drawDeckBank', []);
-        $drawDeckPlayer = $session->get('drawDeckPlayer', []);
+        $game21->initializeGame();
+        return $this->redirectToRoute('game_play');
+    }
 
-        $winner = "";
 
-        $cardsAsStringPlayer = array();
-        $deckValueIntPlayer = 0;
-
-        $cardsAsStringBank = array();
-        $deckValueIntBank = 0;
-        $decks = [];
-
-        if (!$session->has("game_start")) {
-            foreach ($players as $player) {
-                $decks[$player] = new DeckOfCards();
-                $session->set('deck' . $player, $decks[$player] );
-            }
-            $session->set("game_start", True);
-            $session->set("player_turn", True);
-        }
-
+    /**
+    * @SuppressWarnings("PHPMD.ElseExpression")
+    */
+    #[Route('/game/game_play', name: 'game_play')]
+    public function gamePlay(SessionInterface $session, Game21 $game21): Response
+    {
+        $winner = " ";
         $playerTurn = $session->get("player_turn");
-        // @phpmd ignore ElseExpression
         if ($playerTurn === True) {
-            /** @var DeckOfCards $playerDeck */
-            $playerDeck = $session->get("deckPlayer");
-            $cardDrawnPlayer = $playerDeck->draw();
-            $session->set("deckPlayer", $playerDeck);
-            $drawDeckPlayer = $session->get('drawDeckPlayer', []);
-            $drawDeckPlayer[] = $cardDrawnPlayer[0]; // @phpstan-ignore-line
-            $session->set("drawDeckPlayer", $drawDeckPlayer);
 
+            $game21->drawCardForPlayer("player");
         } else {
-            while ($deckValueIntBank < 21) {
-            /** @var DeckOfCards $bankDeck */
-            $bankDeck = $session->get("deckBank");
-            $cardDrawnBank = $bankDeck->draw();
+            $deckValueIntBanker = $game21->getPlayerScore("banker");
 
-            if (!is_array($cardDrawnBank) || !isset($cardDrawnBank[0])) {
-                break; // Prevents trying to access offset on null
+            while ($deckValueIntBanker < 17) {
+                $game21->drawCardForPlayer("banker");
+                $deckValueIntBanker = $game21->getPlayerScore("banker");
+
             }
-
-            $session->set("deckBank", $bankDeck);
-            $drawDeckBank = $session->get('drawDeckBank', []);
-            $drawDeckBank[] = $cardDrawnBank[0]; // @phpstan-ignore-line
-            $deckValueIntBank += $cardDrawnBank[0]->getIntValue();
-            $session->set("drawDeckBank", $drawDeckBank);
-            };
+            $session->set("game_start", False);
         }
 
-        $deckValueIntBank = 0;
-        foreach ($players as $player) {
-            /** @phpstan-ignore-next-line */
-            foreach (${"drawDeck" . $player} as $value) {
-                ${"deckValueInt" . $player} += $value->getIntValue();
-                ${"cardsAsString" . $player}[] = $value->getAsString(); // @phpstan-ignore-line
-            }
-            if ($deckValueIntPlayer > 21) { // @phpstan-ignore-line
-                $winner = "Bank wins with $deckValueIntBank vs $deckValueIntPlayer";
-                $session->set("game_start", False);
-            } elseif ($deckValueIntBank > 21) { // @phpstan-ignore-line
-                $winner = "Player wins with $deckValueIntPlayer vs $deckValueIntBank";
-                $session->set("game_start", False);
-            } elseif ($deckValueIntBank >= $deckValueIntPlayer) { // @phpstan-ignore-line
-                $winner = "Bank wins with $deckValueIntBank vs $deckValueIntPlayer";
-                $session->set("game_start", False);
-            }
+        $deckValueIntPlayer = $game21->getPlayerScore("player");
+        $deckValueIntBanker = $game21->getPlayerScore("banker");
+
+        $cardsAsStringPlayer = $game21->getDrawnCardsAsString("player");
+        $cardsAsStringBanker = $game21->getDrawnCardsAsString("banker");
+
+        $session->set("deckValueIntPlayer", $deckValueIntPlayer);
+        $session->set("deckValueIntBanker", $deckValueIntBanker);
+
+        if ($deckValueIntPlayer > 21) {
+            $session->set("game_start", False);
         }
 
         $gameStatus = $session->get('game_start');
+
+        if ($gameStatus == False) {
+            $winner = $game21->checkWinner();
+        }
 
         $data = [
             'name' => 'Game 21',
             'playerCards' => $cardsAsStringPlayer,
             'playerDeckValue' => $deckValueIntPlayer,
-            'bankCards' => $cardsAsStringBank,
-            'bankDeckValue' => $deckValueIntBank,
+            'bankCards' => $cardsAsStringBanker,
+            'bankDeckValue' => $deckValueIntBanker,
             'winner' => $winner,
             'gameStatus' => $gameStatus,
-
         ];
 
         return $this->render('game/draw.html.twig', $data);
@@ -121,14 +94,17 @@ class GameController extends AbstractController
     {
         $session->set("player_turn", False);
 
-        return $this->redirectToRoute('game');
+        return $this->redirectToRoute('game_play');
     }
 
-    #[Route('/game/reset', name: 'restart_game')]
-    public function gameReset(SessionInterface $session): Response
-    {
-        $session->clear();
 
-        return $this->redirectToRoute('game');
+    #[Route('/game/doc', name: 'doc')]
+    public function gameDoc(): Response
+    {
+        $data = [
+            'name' => '21 Card Game',
+        ];
+
+        return $this->render('game/doc.html.twig', $data);
     }
 }
