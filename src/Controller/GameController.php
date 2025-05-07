@@ -4,10 +4,7 @@ namespace App\Controller;
 
 use App\Card\DeckOfCards;
 use App\Card\CardGraphic;
-
 use App\game\Game21;
-
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -43,7 +40,7 @@ class GameController extends AbstractController
     {
         $winner = " ";
         $playerTurn = $session->get("player_turn");
-        if ($playerTurn === True) {
+        if ($playerTurn === true) {
 
             $game21->drawCardForPlayer("player");
         } else {
@@ -54,7 +51,7 @@ class GameController extends AbstractController
                 $deckValueIntBanker = $game21->getPlayerScore("banker");
 
             }
-            $session->set("game_start", False);
+            $session->set("game_start", false);
         }
 
         $deckValueIntPlayer = $game21->getPlayerScore("player");
@@ -67,12 +64,12 @@ class GameController extends AbstractController
         $session->set("deckValueIntBanker", $deckValueIntBanker);
 
         if ($deckValueIntPlayer > 21) {
-            $session->set("game_start", False);
+            $session->set("game_start", false);
         }
 
         $gameStatus = $session->get('game_start');
 
-        if ($gameStatus == False) {
+        if ($gameStatus == false) {
             $winner = $game21->checkWinner();
         }
 
@@ -92,7 +89,7 @@ class GameController extends AbstractController
     #[Route('/game/stand', name: 'stand')]
     public function gameStand(SessionInterface $session): Response
     {
-        $session->set("player_turn", False);
+        $session->set("player_turn", false);
 
         return $this->redirectToRoute('game_play');
     }

@@ -5,7 +5,6 @@ namespace App\game;
 use App\Card\DeckOfCards;
 use App\Card\CardGraphic;
 use App\Card\Card;
-
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -28,7 +27,7 @@ class Game21
         $this->session->set('drawnPlayerCards', []);
         $this->session->set('drawnBankCards', []);
         $this->session->set('game_start', true);
-        $this->session->set("player_turn", True);
+        $this->session->set("player_turn", true);
     }
 
     public function drawCardForPlayer(string $who): void
@@ -87,15 +86,15 @@ class Game21
         /** @var int $banker */
         $banker = $this->session->get('deckValueIntBanker');
         $winner = "";
-        
+
         if ($player > 21) {
-            $winner = sprintf("Bank wins with %d vs %d", $banker, $player );
+            $winner = sprintf("Bank wins with %d vs %d", $banker, $player);
         } elseif ($banker > 21) {
-            $winner = sprintf("Player wins with %d vs %d", $player, $banker );
+            $winner = sprintf("Player wins with %d vs %d", $player, $banker);
         } elseif ($banker >= $player) {
-            $winner = sprintf("Bank wins with %d vs %d", $banker, $player );
-        } elseif ($player > $banker){
-            $winner = sprintf("Player wins with %d vs %d", $player, $banker );
+            $winner = sprintf("Bank wins with %d vs %d", $banker, $player);
+        } elseif ($player > $banker) {
+            $winner = sprintf("Player wins with %d vs %d", $player, $banker);
         }
         return $winner;
     }
