@@ -12,11 +12,12 @@
 	<div class="content-section">
 		<div class="content">
 			<ul>
-                <li><a href="/api/quote">/api/quote</a>: See the quote of the day!</li>
-                <li><a href="/api/deck">/api/deck</a>: See the deck of cards</li>
-                <li><a href="/api/deck/shuffle">/api/deck/shuffle</a>: Shuffle the deck</li>
-                <li><a href="/api/deck/draw">/api/deck</a>: Draw a card</li>
-                <li><a href="/api/deck/draw/">/api/deck/:number</a>: Draw a amount of cards</li>
+                <li><a href={{ path("quote") }}>/api/quote</a>: See the quote of the day!</li>
+                <li><a href={{ path("deck") }}>/api/deck</a>: See the deck of cards</li>
+                <li><a href={{ path("api_shuffle") }}>/api/deck/shuffle</a>: Shuffle the deck</li>
+                <li><a href={{ path("api_draw") }}>/api/deck/draw</a>: Draw a card</li>
+                <li><a href={{ path("api_draw_amount", {'number': 5}) }}>/api/deck/5</a>: Draw a amount of cards</li>
+                <li><a href={{ path("api_game") }}>/api/game/</a>: See 21 game status</li>
 
 
             </ul>
