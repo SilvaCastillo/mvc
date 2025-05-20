@@ -25,6 +25,7 @@ class CardGameController extends AbstractController
     {
         if (!$session->has("deck")) {
             $deck = new DeckOfCards();
+            $deck->shuffle();
             $session->set('deck', $deck);
         }
 
@@ -74,6 +75,7 @@ class CardGameController extends AbstractController
 
         if (!$session->has("deck")) {
             $deck = new DeckOfCards();
+            $deck->shuffle();
             $session->set('deck', $deck);
         }
 
@@ -108,6 +110,7 @@ class CardGameController extends AbstractController
 
         if (!$session->has("deck")) {
             $deck = new DeckOfCards();
+            $deck->shuffle();
             $session->set('deck', $deck);
         }
 
