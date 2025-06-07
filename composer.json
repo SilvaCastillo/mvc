@@ -88,6 +88,12 @@
             "@phpmd",
             "@phpstan"
         ],
+        "clean": "rm -rf build .phpunit.result.cache .phpunit.cache",
+        "clean-all": [
+            "@clean",
+            "rm -rf vendor composer.lock"
+        ],
+        "phpunit": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text",
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
@@ -117,6 +123,7 @@
         "symfony/maker-bundle": "^1.62.1",
         "symfony/phpunit-bridge": "^7.2",
         "symfony/stopwatch": "7.2.*",
+        "symfony/test-pack": "*",
         "symfony/web-profiler-bundle": "7.2.*"
     }
 }
