@@ -38,6 +38,7 @@ class CardGraphicTest extends TestCase
     {
         $cardGraphic = new CardGraphic('2', 'H');
         $string = $cardGraphic->getAsString();
-        $this->assertIsString($string);
+        $expString = '2♥';
+        $this->assertEquals($expString, $string);
     }
 }
