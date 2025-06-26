@@ -198,7 +198,7 @@ class ApiController extends AbstractController
             /** @phpstan-ignore-next-line */
             foreach (${$player . "Cards"} as $card) {
                 ${$player . "IntValue"} += $card->getIntValue();
-                ${$player . "CardsAsString"} = $card->getAsString();  // @phpstan-ignore-line
+                ${$player . "CardsAsString"} = $card->getAsString();
             }
         }
 
