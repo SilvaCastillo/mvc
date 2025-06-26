@@ -14,7 +14,7 @@ class DeckOfCards
     /**
      * CardGraphic constructor.
      *
-     *      * Initializes the deck by creating the full deck. 
+     *      * Initializes the deck by creating the full deck.
     */
     public function __construct()
     {
@@ -42,7 +42,7 @@ class DeckOfCards
 
     /**
      * Returns the current deck of cards.
-     * 
+     *
      * @return CardGraphic[] The array of remaining cards in the deck.
     */
     public function getDeck(): array
@@ -52,7 +52,7 @@ class DeckOfCards
 
     /**
      * Shuffle the deck of cards randomly.
-     * 
+     *
      * @return void
     */
     public function shuffle(): void
@@ -62,7 +62,7 @@ class DeckOfCards
 
     /**
      * Draws a number of random cards from the deck and removes them.
-     * 
+     *
      * @param int $number of cards to draw (default is 1).
      * @return CardGraphic[]|null An array of drawn cards, or null if not enough cards remain.
     */
@@ -84,7 +84,7 @@ class DeckOfCards
 
     /**
      * Returns the number of cards left in the deck.
-     * 
+     *
      * @return int The number of remaining cards.
     */
     public function getRemaining(): int
