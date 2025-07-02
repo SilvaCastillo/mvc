@@ -1,7 +1,6 @@
 <a id="kmom01"></a>Kmom01
 ------------------------------
 
-
 Jag har tidigare gått OOPython-kursen och har därigenom fått grundläggande erfarenhet av att arbeta med klasser och objekt i Python. 
 En klass är en mall eller ett recept för att skapa objekt. Där den beskriver vilka metoder och egenskaper objekten ska ha. Ett objekt är en instans av en klass, när man har definierat en klass så kan man skapa ett objekt utifrån det. För att kunna skapa klasser är det också viktigt att förstå hur konstruktorn fungerar, då den kan användas för att skapa  objektens egenskaper. 
 Efter att ha gjort övningen tyckte jag att det var lätt att förstå kodstrukturen i Symfony. Det var enkelt att hitta var man skulle lägga till kod, och mapparna var logiskt uppdelade, vilket gjorde det smidigt att navigera i projektet. Några saker som jag tycker är värdefulla är PSR (PHP standards Recommendations), som är standarden för hur man bör strukturera sin kod, till exempel namnkonventioner och kodstil. Jag uppskattar också Security Best Practices, där det handlar om hur man skyddar sig mot SQL-injektioner och hanterar lösenord med hashning på ett säkert sätt. Såklart är även andra delar som nämns viktigt, som Error handling, Database access med PDO men för mig är just  PSR och säkerhetsaspekterna som känns allra viktigast.
@@ -39,6 +38,10 @@ Jag lärde mig vad pseudokod är som jag tror att jag inte hade hört talas om t
 
 <a id="kmom04"></a>Kmom04
 ------------------------------
+
+Inledningsvis upplevde jag det som lagom svårt att skriva kod som testar annan kod med PHPUnit. Jag har tidigare skrivit tester i Python och tycker att PHPUnit påminner en del om det och därför var det naturligt att använda PHPUnit. Kodtäckningen för klasserna Card, CardGraphic och DeckOfCards blev 100%, så jag lyckades väldigt bra med kodtäckningen av min kod. Jag använde mig också av testprinciper såsom att bara testa en sak i taget, vilket ledde till fler, men tydligare, tester jämfört med att slå ihop flera tester i ett test.
+Vidare tycker jag att det mesta av min kod är testbart, men controller-klasserna var svårare att testa, särskilt spel-controllern. Jag funderade ett tag på hur jag kunde förbättra testbarheten där, men hittade ingen bra lösning. Jag valde att inte skriva om någon kod i denna uppgift då det inte behövdes. Det beror på att jag redan till en början kunde skriva tester för Card, CardGraphic och DeckOfCards. Om jag skulle fokusera mer på controller-klasserna skulle jag nog behöva skriva om vissa delar för att göra dem mer testbara. Det är inget jag har gjort i nuläget.
+Utöver testbarheten i sig, anser jag att snygg och ren kod ofta är testbar, men testbar kod är inte alltid snygg och ren. Det är alltså möjligt att skriva testbar kod som ändå är rörig, men det ena hänger ofta ihop med det andra.
 
 
 
