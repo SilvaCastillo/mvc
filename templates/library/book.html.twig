@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Book{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    {% for data in book %}
+    {# <div class="content-section">
+        <div class="content"> #}
+            <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 rounded-lg bg-[#f4f7ff]">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+                    <div class="shrink-0">
+                    {% if data.coverUrl is defined and data.coverUrl %}
+                        <img src="{{data.coverUrl}}" alt="Omslag till {{data.title}} "
+                            class="aspect-square w-full rounded-lg border-gray-900 object-cover" />
+                    {% else %}
+                        <div class="aspect-square w-full rounded-lg border-2 border-gray-900 bg-gray-50"></div>
+                    {% endif %}
+                    </div>
+                    <dl class="grid grid-cols-1 gap-3">
+                        <div>
+                            <dt class="text-xs uppercase tracking-wide text-gray-500">Titleaa</dt>
+                            <dd class="text-base text-gray-900">{{data.title}}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-xs uppercase tracking-wide text-gray-500">Author</dt>
+                            <dd class="text-base text-gray-900">{{data.author}}</dd>
+                        </div>
+                        <div>
+                            <dt class="text-xs uppercase tracking-wide text-gray-500">ISBN</dt>
+                            <dd class="text-base text-gray-900">{{data.isbn}}</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        {# </div>
+    </div> #}
+    {% endfor %}
+</div>
+
+{% endblock %}
