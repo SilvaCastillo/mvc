@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Card Game{% endblock %}
+
+{% block content %}
+
+<div class="container">
+	<div class="content-section">
+		<div class="content">
+			{{ include('content/libraryStart.markdown.twig')|markdown_to_html }}
+
+			<div class="button mt-[30px]">
+				<a href="{{ path("add_book") }}" class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Add book</a>
+				<a href={{ path("library_books") }} class="bg-[#43655a] hover:bg-[#009688] text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">See all books</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
