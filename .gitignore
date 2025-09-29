@@ -36,3 +36,7 @@ yarn-error.log
 /tools/**/composer.lock
 .php-cs-fixer.cache
 .phpdoc/
+
+###<  ###
+/public/img/covers/*
+!/public/img/covers/.gitkeep
