@@ -93,17 +93,15 @@ class LibraryController extends AbstractController
     }
 
     #[Route("/library/book/{id<\d+>}", name: "get_book_by_id")]
-    public function get_book_by_id(): Response
+    public function get_book_by_id(BookRepository $bookRepository, int $id): Response
     {
 
-        $books = [
-            ['id'=>1,'title'=>'Sagan om ringen','author'=>'J.R.R. Tolkien', 'isbn'=>'12345214', 'coverUrl'=> 'https://tailwindcss.com/plus-assets/img/ecommerce-images/category-page-04-image-card-01.jpg'],
-        ];
-
+        $book = $bookRepository
+            ->find($id);
 
         $data = [
             'name' => 'Book',
-            'book' => $books,
+            'book' => $book,
         ];
 
         return $this->render('library/book.html.twig', $data);
