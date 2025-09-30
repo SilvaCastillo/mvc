@@ -5,38 +5,37 @@
 {% block content %}
 
 <div class="container">
-    {% for data in book %}
-    {# <div class="content-section">
-        <div class="content"> #}
-            <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 rounded-lg bg-[#f4f7ff]">
-                <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-                    <div class="shrink-0">
-                    {% if data.coverUrl is defined and data.coverUrl %}
-                        <img src="{{data.coverUrl}}" alt="Omslag till {{data.title}} "
-                            class="aspect-square w-full rounded-lg border-gray-900 object-cover" />
-                    {% else %}
-                        <div class="aspect-square w-full rounded-lg border-2 border-gray-900 bg-gray-50"></div>
-                    {% endif %}
-                    </div>
-                    <dl class="grid grid-cols-1 gap-3">
-                        <div>
-                            <dt class="text-xs uppercase tracking-wide text-gray-500">Titleaa</dt>
-                            <dd class="text-base text-gray-900">{{data.title}}</dd>
-                        </div>
-                        <div>
-                            <dt class="text-xs uppercase tracking-wide text-gray-500">Author</dt>
-                            <dd class="text-base text-gray-900">{{data.author}}</dd>
-                        </div>
-                        <div>
-                            <dt class="text-xs uppercase tracking-wide text-gray-500">ISBN</dt>
-                            <dd class="text-base text-gray-900">{{data.isbn}}</dd>
-                        </div>
-                    </dl>
-                </div>
+    <div class="relative  mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 rounded-lg bg-[#f4f7ff]">
+        <a href="{{ path('library_books') }}" class="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 " aria-label="Close">
+            <svg class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M6.22 6.22a.75.75 0 0 1 1.06 0L10 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06L11.06 10l2.72 2.72a.75.75 0 0 1-1.06 1.06L10 11.06l-2.72 2.72a.75.75 0 1 1-1.06-1.06L8.94 10 6.22 7.28a.75.75 0 0 1 0-1.06Z"/>
+            </svg>
+        </a>
+        <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+            <div class="shrink-0">
+            {% if book.coverUrl is defined and book.coverUrl %}
+                <img src="{{book.coverUrl}}" alt="Omslag till {{book.title}} "
+                    class="aspect-square w-full rounded-lg border-gray-900 object-cover" />
+            {% else %}
+                <div class="aspect-square w-full rounded-lg border-2 border-gray-900 bg-gray-50"></div>
+            {% endif %}
             </div>
-        {# </div>
-    </div> #}
-    {% endfor %}
+            <dl class="grid grid-cols-1 gap-3">
+                <div>
+                    <dt class="text-xs uppercase tracking-wide text-gray-500">Title</dt>
+                    <dd class="text-base text-gray-900">{{book.title}}</dd>
+                </div>
+                <div>
+                    <dt class="text-xs uppercase tracking-wide text-gray-500">Author</dt>
+                    <dd class="text-base text-gray-900">{{book.author}}</dd>
+                </div>
+                <div>
+                    <dt class="text-xs uppercase tracking-wide text-gray-500">ISBN</dt>
+                    <dd class="text-base text-gray-900">{{book.isbn}}</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
