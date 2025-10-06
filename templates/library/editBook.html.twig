@@ -1,0 +1,57 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Update Book{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="relative mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 rounded-lg bg-[#f4f7ff]">
+        <a href="{{ path('get_book_by_id',  {id: book.id}) }}" class="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-gray-700" aria-label="Close">
+            <svg class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M6.22 6.22a.75.75 0 0 1 1.06 0L10 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06L11.06 10l2.72 2.72a.75.75 0 0 1-1.06 1.06L10 11.06l-2.72 2.72a.75.75 0 1 1-1.06-1.06L8.94 10 6.22 7.28a.75.75 0 0 1 0-1.06Z"/>
+            </svg>
+        </a>
+
+        <form method="post" action="{{ path('update_book', {id: book.id}) }}">
+            <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+                <div class="shrink-0">
+                    {% if book.coverUrl is defined and book.coverUrl %}
+                        <img src="{{ book.coverUrl }}" alt="Omslag till {{ book.title }}" 
+                            class="aspect-square w-full rounded-lg border-gray-900 object-cover" />
+                    {% else %}
+                        <div class="aspect-square w-full rounded-lg border-2 border-gray-900 bg-gray-50"></div>
+                    {% endif %}
+                </div>
+
+                <div class="relative">
+                    <div class="grid grid-cols-1 gap-3 pr-16">
+                        <div>
+                            <label class="text-xs uppercase tracking-wide text-gray-500">Title</label>
+                            <input type="text" name="title" value="{{ book.title }}" 
+                                class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        </div>
+                        <div>
+                            <label class="text-xs uppercase tracking-wide text-gray-500">Author</label>
+                            <input type="text" name="author" value="{{ book.author }}" 
+                                class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        </div>
+                        <div>
+                            <label class="text-xs uppercase tracking-wide text-gray-500">ISBN</label>
+                            <input type="text" name="isbn" value="{{ book.isbn }}" 
+                                class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        </div>
+                        <div class="mt-4">
+                            <button type="submit" 
+                                class="w-full rounded-lg bg-indigo-600 px-4 py-3 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                Update Book
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
