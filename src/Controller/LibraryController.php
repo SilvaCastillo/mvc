@@ -93,7 +93,7 @@ class LibraryController extends AbstractController
     }
 
     #[Route("/library/book/{id<\d+>}", name: "get_book_by_id")]
-    public function get_book_by_id(BookRepository $bookRepository, int $id): Response
+    public function get_book_by_id(BookRepository $bookRepository, int $id, ): Response
     {
 
         $book = $bookRepository
@@ -106,4 +106,36 @@ class LibraryController extends AbstractController
 
         return $this->render('library/book.html.twig', $data);
     }
+
+
+    #[Route("/library/book/{id<\d+>}/edit", name: "update_book", methods: ['GET','POST'])]
+    public function update_book(BookRepository $bookRepository, int $id, Request $request, ManagerRegistry $doctrine): Response
+    {
+        $book = $bookRepository
+            ->find($id);
+
+        if ($request->isMethod('POST')) { 
+            $entityManager = $doctrine->getManager();
+            $title  = trim((string) $request->request->get('title'));
+            $author = trim((string) $request->request->get('author'));
+            $isbn  = $request->request->get('isbn');
+
+            $book->setTitle($title);
+            $book->setAuthor($author);
+            $book->setIsbn($isbn);
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('get_book_by_id',['id' => $id]);
+        }
+
+
+        $data = [
+            'name' => 'Book',
+            'book' => $book,
+        ];
+
+        return $this->render('library/editBook.html.twig', $data);
+    }
+
 }
