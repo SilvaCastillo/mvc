@@ -99,6 +99,13 @@ class LibraryController extends AbstractController
         $book = $bookRepository
             ->find($id);
 
+        if (!$book) {
+            throw $this->createNotFoundException(
+            'No book found with id '.$id
+            );
+        }
+
+
         $data = [
             'name' => 'Book',
             'book' => $book,
@@ -113,6 +120,12 @@ class LibraryController extends AbstractController
     {
         $book = $bookRepository
             ->find($id);
+
+        if (!$book) {
+            throw $this->createNotFoundException(
+            'No book found with id '.$id
+            );
+        }
 
         if ($request->isMethod('POST')) { 
             $entityManager = $doctrine->getManager();
@@ -149,8 +162,8 @@ class LibraryController extends AbstractController
         if (!$book) {
         throw $this->createNotFoundException(
             'No book found with id '.$id
-        );
-    }
+            );
+        }
 
         $entityManager = $doctrine->getManager();
         $entityManager->remove($book);
