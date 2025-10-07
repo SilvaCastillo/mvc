@@ -132,19 +132,44 @@ class LibraryController extends AbstractController
             $title  = trim((string) $request->request->get('title'));
             $author = trim((string) $request->request->get('author'));
             $isbn  = $request->request->get('isbn');
+            $coverFile = $request->files->get('file-upload');
 
             $book->setTitle($title);
             $book->setAuthor($author);
             $book->setIsbn($isbn);
 
+            
+            if ($coverFile instanceof UploadedFile) {
+                $violations = $validator->validate(
+                $coverFile,
+                new \Symfony\Component\Validator\Constraints\Image([
+                    'maxSize' => '5M',
+                    'mimeTypes' => ['image/jpeg', 'image/png'],
+                    'detectCorrupted' => true,
+                ])
+                );
+
+                $mime = $coverFile->getMimeType();
+                $ext  = match ($mime) {
+                'image/jpeg' => 'jpg',
+                'image/png'  => 'png',
+                default      => null,
+                };
+
+                $coverName = bin2hex(random_bytes(8)).'.'.$ext;
+                $coverFile->move($this->getParameter('covers_dir'), $coverName);
+                $book->setCoverUrl('/img/covers/'.$coverName);
+            }
+
             $entityManager->flush();
+
 
             return $this->redirectToRoute('get_book_by_id',['id' => $id]);
         }
 
 
         $data = [
-            'name' => 'Book',
+            'name' => $coverFile,
             'book' => $book,
         ];
 

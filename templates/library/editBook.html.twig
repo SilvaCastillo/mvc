@@ -13,15 +13,26 @@
             </svg>
         </a>
 
-        <form method="post" action="{{ path('update_book', {id: book.id}) }}">
+        <form method="post" action="{{ path('update_book', {id: book.id}) }}" enctype="multipart/form-data">
             <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
                 <div class="shrink-0">
-                    {% if book.coverUrl is defined and book.coverUrl %}
-                        <img src="{{ book.coverUrl }}" alt="Omslag till {{ book.title }}" 
-                            class="aspect-square w-full rounded-lg border-gray-900 object-cover" />
-                    {% else %}
-                        <div class="aspect-square w-full rounded-lg border-2 border-gray-900 bg-gray-50"></div>
-                    {% endif %}
+                    <label for="file-upload" class="block cursor-pointer group relative">
+                        {% if book.coverUrl is defined and book.coverUrl %}
+                            <img src="{{ book.coverUrl }}" alt="Omslag till {{ book.title }}" 
+                                class="aspect-square w-full rounded-lg border-gray-900 object-cover" />
+                        {% else %}
+                            <div class="aspect-square w-full rounded-lg border-2 border-gray-900 bg-gray-50"></div>
+                        {% endif %}
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="bg-white/90 rounded-lg px-4 py-2 text-sm font-medium text-gray-900">
+                                Click to change cover
+                            </div>
+                        </div>
+                    </label>
+
+                    <input id="file-upload" name="file-upload" type="file" accept="image/*" class="hidden">
+                    <p class="mt-2 text-xs text-gray-500 text-center">PNG, JPG, up to 5MB</p>
+
                 </div>
 
                 <div class="relative">
