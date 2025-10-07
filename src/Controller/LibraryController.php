@@ -9,11 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-
 
 class LibraryController extends AbstractController
 {
@@ -28,7 +27,7 @@ class LibraryController extends AbstractController
     }
 
     #[Route("/library/add_book", name: "add_book", methods: ['GET','POST'])]
-    public function add_book(Request $request, ManagerRegistry $doctrine, ValidatorInterface $validator): Response
+    public function addBook(Request $request, ManagerRegistry $doctrine, ValidatorInterface $validator): Response
     {
         $entityManager = $doctrine->getManager();
 
@@ -46,19 +45,25 @@ class LibraryController extends AbstractController
 
             if ($coverFile instanceof UploadedFile) {
                 $violations = $validator->validate(
-                $coverFile,
-                new \Symfony\Component\Validator\Constraints\Image([
+                    $coverFile,
+                    new Image([
                     'maxSize' => '5M',
                     'mimeTypes' => ['image/jpeg', 'image/png'],
                     'detectCorrupted' => true,
                 ])
                 );
 
+                if ($violations->count() > 0) {
+                    return $this->render('validator.html.twig', [
+                        'name' => 'Error'
+                    ]);
+                }
+
                 $mime = $coverFile->getMimeType();
                 $ext  = match ($mime) {
-                'image/jpeg' => 'jpg',
-                'image/png'  => 'png',
-                default      => null,
+                    'image/jpeg' => 'jpg',
+                    'image/png'  => 'png',
+                    default      => null,
                 };
 
                 $coverName = bin2hex(random_bytes(8)).'.'.$ext;
@@ -93,7 +98,7 @@ class LibraryController extends AbstractController
     }
 
     #[Route("/library/book/{id<\d+>}", name: "get_book_by_id")]
-    public function get_book_by_id(BookRepository $bookRepository, int $id, ): Response
+    public function getBookById(BookRepository $bookRepository, int $id): Response
     {
 
         $book = $bookRepository
@@ -101,7 +106,7 @@ class LibraryController extends AbstractController
 
         if (!$book) {
             throw $this->createNotFoundException(
-            'No book found with id '.$id
+                'No book found with id '.$id
             );
         }
 
@@ -116,18 +121,18 @@ class LibraryController extends AbstractController
 
 
     #[Route("/library/book/{id<\d+>}/edit", name: "update_book", methods: ['GET','POST'])]
-    public function update_book(BookRepository $bookRepository, int $id, Request $request, ManagerRegistry $doctrine): Response
+    public function updateBook(BookRepository $bookRepository, int $id, Request $request, ManagerRegistry $doctrine, ValidatorInterface $validator): Response
     {
         $book = $bookRepository
             ->find($id);
 
         if (!$book) {
             throw $this->createNotFoundException(
-            'No book found with id '.$id
+                'No book found with id '.$id
             );
         }
 
-        if ($request->isMethod('POST')) { 
+        if ($request->isMethod('POST')) {
             $entityManager = $doctrine->getManager();
             $title  = trim((string) $request->request->get('title'));
             $author = trim((string) $request->request->get('author'));
@@ -138,22 +143,29 @@ class LibraryController extends AbstractController
             $book->setAuthor($author);
             $book->setIsbn($isbn);
 
-            
+
             if ($coverFile instanceof UploadedFile) {
                 $violations = $validator->validate(
-                $coverFile,
-                new \Symfony\Component\Validator\Constraints\Image([
-                    'maxSize' => '5M',
-                    'mimeTypes' => ['image/jpeg', 'image/png'],
-                    'detectCorrupted' => true,
-                ])
+                    $coverFile,
+                    new Image([
+                        'maxSize' => '5M',
+                        'mimeTypes' => ['image/jpeg', 'image/png'],
+                        'detectCorrupted' => true,
+                    ])
                 );
+
+                if ($violations->count() > 0) {
+                    return $this->render('validator.html.twig', [
+                        'name' => 'Error'
+                    ]);
+                }
+
 
                 $mime = $coverFile->getMimeType();
                 $ext  = match ($mime) {
-                'image/jpeg' => 'jpg',
-                'image/png'  => 'png',
-                default      => null,
+                    'image/jpeg' => 'jpg',
+                    'image/png'  => 'png',
+                    default      => null,
                 };
 
                 $coverName = bin2hex(random_bytes(8)).'.'.$ext;
@@ -164,12 +176,12 @@ class LibraryController extends AbstractController
             $entityManager->flush();
 
 
-            return $this->redirectToRoute('get_book_by_id',['id' => $id]);
+            return $this->redirectToRoute('get_book_by_id', ['id' => $id]);
         }
 
 
         $data = [
-            'name' => $coverFile,
+            'name' => 'Book',
             'book' => $book,
         ];
 
@@ -178,15 +190,15 @@ class LibraryController extends AbstractController
 
 
     #[Route("/library/delete/{id<\d+>}", name: "delete_book_by_id")]
-    public function delete_book_by_id(BookRepository $bookRepository, int $id, ManagerRegistry $doctrine,): Response
+    public function deleteBookById(BookRepository $bookRepository, int $id, ManagerRegistry $doctrine): Response
     {
 
         $book = $bookRepository
             ->find($id);
 
         if (!$book) {
-        throw $this->createNotFoundException(
-            'No book found with id '.$id
+            throw $this->createNotFoundException(
+                'No book found with id '.$id
             );
         }
 
