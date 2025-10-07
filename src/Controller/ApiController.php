@@ -213,7 +213,7 @@ class ApiController extends AbstractController
 
         return $this->json($data);
     }
-    
+
 
     #[Route('/api/library/books', name: 'apiBooks')]
     public function apiLibrary(BookRepository $bookRepository): Response
@@ -224,6 +224,29 @@ class ApiController extends AbstractController
         $data = [
             'name' => 'Books',
             'books' => $books,
+        ];
+
+        return $this->json($data);
+    }
+
+
+    #[Route("/api/library/book/{isbn<\d+>}", name: "apiBookByIsbn")]
+    public function apiGetBookByIsbn(BookRepository $bookRepository, int $isbn): Response
+    {
+
+        $book = $bookRepository
+            ->findBookByIsbn($isbn);
+
+        if (!$book) {
+            throw $this->createNotFoundException(
+                'No book found with ISBN '.$isbn
+            );
+        }
+
+
+        $data = [
+            'name' => 'Book',
+            'book' => $book,
         ];
 
         return $this->json($data);
