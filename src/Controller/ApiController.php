@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Card\Card;
 use App\Card\DeckOfCards;
+use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -212,4 +213,21 @@ class ApiController extends AbstractController
 
         return $this->json($data);
     }
+    
+
+    #[Route('/api/library/books', name: 'apiBooks')]
+    public function apiLibrary(BookRepository $bookRepository): Response
+    {
+        $books = $bookRepository
+            ->findALL();
+
+        $data = [
+            'name' => 'Books',
+            'books' => $books,
+        ];
+
+        return $this->json($data);
+    }
+
+
 }
