@@ -36,6 +36,8 @@
         </properties>
     </rule>
 
+    <exclude-pattern>*/migrations/*</exclude-pattern>
+
     <rule ref="rulesets/unusedcode.xml" />
 
 </ruleset>
