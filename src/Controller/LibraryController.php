@@ -35,7 +35,7 @@ class LibraryController extends AbstractController
 
             $title  = trim((string) $request->request->get('book-title'));
             $author = trim((string) $request->request->get('author'));
-            $isbn  = $request->request->get('book-isbn');
+            $isbn  = trim((string) $request->request->get('book-isbn'));
             $coverFile = $request->files->get('file-upload');
 
             $book = new Book();
@@ -67,7 +67,9 @@ class LibraryController extends AbstractController
                 };
 
                 $coverName = bin2hex(random_bytes(8)).'.'.$ext;
-                $coverFile->move($this->getParameter('covers_dir'), $coverName);
+                $coversDir = $this->getParameter('covers_dir');
+                assert(is_string($coversDir));
+                $coverFile->move($coversDir, $coverName);
                 $book->setCoverUrl('/img/covers/'.$coverName);
             }
 
@@ -136,7 +138,7 @@ class LibraryController extends AbstractController
             $entityManager = $doctrine->getManager();
             $title  = trim((string) $request->request->get('title'));
             $author = trim((string) $request->request->get('author'));
-            $isbn  = $request->request->get('isbn');
+            $isbn  = trim((string) $request->request->get('isbn'));
             $coverFile = $request->files->get('file-upload');
 
             $book->setTitle($title);
@@ -169,7 +171,9 @@ class LibraryController extends AbstractController
                 };
 
                 $coverName = bin2hex(random_bytes(8)).'.'.$ext;
-                $coverFile->move($this->getParameter('covers_dir'), $coverName);
+                $coversDir = $this->getParameter('covers_dir');
+                assert(is_string($coversDir));
+                $coverFile->move($coversDir, $coverName);
                 $book->setCoverUrl('/img/covers/'.$coverName);
             }
 

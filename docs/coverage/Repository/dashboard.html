@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
   <meta charset="UTF-8">
-  <title>Dashboard for /home/pablo/dbwebb-kurser/mvc/me/report/src/game</title>
+  <title>Dashboard for /home/pablo/dbwebb-kurser/mvc/me/report/src/Repository</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="../_css/bootstrap.min.css?v=9.2.32" rel="stylesheet" type="text/css">
   <link href="../_css/nv.d3.min.css?v=9.2.32" rel="stylesheet" type="text/css">
@@ -17,7 +17,7 @@
       <nav aria-label="breadcrumb">
        <ol class="breadcrumb">
          <li class="breadcrumb-item"><a href="../index.html">/home/pablo/dbwebb-kurser/mvc/me/report/src</a></li>
-         <li class="breadcrumb-item"><a href="index.html">game</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Repository</a></li>
          <li class="breadcrumb-item active">(Dashboard)</li>
 
        </ol>
@@ -58,7 +58,7 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="Game21.php.html#11">App\game\Game21</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BookRepository.php.html#12">App\Repository\BookRepository</a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -75,7 +75,6 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="Game21.php.html#11">App\game\Game21</a></td><td class="text-right">272</td></tr>
 
        </tbody>
       </table>
@@ -113,12 +112,8 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="Game21.php.html#15"><abbr title="App\game\Game21::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="Game21.php.html#20"><abbr title="App\game\Game21::initializeGame">initializeGame</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="Game21.php.html#33"><abbr title="App\game\Game21::drawCardForPlayer">drawCardForPlayer</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="Game21.php.html#50"><abbr title="App\game\Game21::getPlayerScore">getPlayerScore</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="Game21.php.html#67"><abbr title="App\game\Game21::getDrawnCardsAsString">getDrawnCardsAsString</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="Game21.php.html#81"><abbr title="App\game\Game21::checkWinner">checkWinner</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BookRepository.php.html#14"><abbr title="App\Repository\BookRepository::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="BookRepository.php.html#34"><abbr title="App\Repository\BookRepository::findBookByIsbn">findBookByIsbn</abbr></a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -135,10 +130,6 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="Game21.php.html#81"><abbr title="App\game\Game21::checkWinner">checkWinner</abbr></a></td><td class="text-right">30</td></tr>
-       <tr><td><a href="Game21.php.html#33"><abbr title="App\game\Game21::drawCardForPlayer">drawCardForPlayer</abbr></a></td><td class="text-right">12</td></tr>
-       <tr><td><a href="Game21.php.html#50"><abbr title="App\game\Game21::getPlayerScore">getPlayerScore</abbr></a></td><td class="text-right">12</td></tr>
-       <tr><td><a href="Game21.php.html#67"><abbr title="App\game\Game21::getDrawnCardsAsString">getDrawnCardsAsString</abbr></a></td><td class="text-right">12</td></tr>
 
        </tbody>
       </table>
@@ -185,7 +176,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#methodCoverageDistribution svg')
-      .datum(getCoverageDistributionData([6,0,0,0,0,0,0,0,0,0,0,0], "Method Coverage"))
+      .datum(getCoverageDistributionData([2,0,0,0,0,0,0,0,0,0,0,0], "Method Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -235,7 +226,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Cyclomatic Complexity');
 
     d3.select('#classComplexity svg')
-      .datum(getComplexityData([[0,16,"<a href=\"Game21.php.html#11\">App\\game\\Game21<\/a>"]], 'Class Complexity'))
+      .datum(getComplexityData([[0,2,"<a href=\"BookRepository.php.html#12\">App\\Repository\\BookRepository<\/a>"]], 'Class Complexity'))
       .transition()
       .duration(500)
       .call(chart);
@@ -259,7 +250,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Method Complexity');
 
     d3.select('#methodComplexity svg')
-      .datum(getComplexityData([[0,1,"<a href=\"Game21.php.html#15\">App\\game\\Game21::__construct<\/a>"],[0,1,"<a href=\"Game21.php.html#20\">App\\game\\Game21::initializeGame<\/a>"],[0,3,"<a href=\"Game21.php.html#33\">App\\game\\Game21::drawCardForPlayer<\/a>"],[0,3,"<a href=\"Game21.php.html#50\">App\\game\\Game21::getPlayerScore<\/a>"],[0,3,"<a href=\"Game21.php.html#67\">App\\game\\Game21::getDrawnCardsAsString<\/a>"],[0,5,"<a href=\"Game21.php.html#81\">App\\game\\Game21::checkWinner<\/a>"]], 'Method Complexity'))
+      .datum(getComplexityData([[0,1,"<a href=\"BookRepository.php.html#14\">App\\Repository\\BookRepository::__construct<\/a>"],[0,1,"<a href=\"BookRepository.php.html#34\">App\\Repository\\BookRepository::findBookByIsbn<\/a>"]], 'Method Complexity'))
       .transition()
       .duration(500)
       .call(chart);
