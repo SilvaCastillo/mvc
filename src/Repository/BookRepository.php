@@ -31,13 +31,15 @@ class BookRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    public function findBookByIsbn($value): ?Book
+    public function findBookByIsbn(int $value): ?Book
     {
-        return $this->createQueryBuilder('b')
+        /** @var Book|null $result */
+        $result = $this->createQueryBuilder('b')
             ->andWhere('b.isbn = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
+        return $result;
     }
 }
