@@ -18,6 +18,10 @@
                 <li><a class="text-blue-400 " href={{ path('api_draw') }}>/api/deck/draw</a>: Draw a card</li>
                 <li><a class="text-blue-400" href={{ path('api_draw_amount', {'number': 5}) }}>/api/deck/5</a>: Draw a amount of cards</li>
                 <li><a class="text-blue-400" href={{ path('api_game') }}>/api/game/</a>: See 21 game status</li>
+                <li><a class="text-blue-400" href={{ path('apiBooks') }}>/api/library/books</a>: See all books</li>
+                <li><a class="text-blue-400" href={{ path('apiBookByIsbn' , {'isbn': 9789100808020} ) }}>/api/library/book/{isbn<\d+>}</a>: See specific book</li>
+
+
 
 
             </ul>
