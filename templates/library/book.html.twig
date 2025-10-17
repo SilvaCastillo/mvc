@@ -14,10 +14,11 @@
         <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
             <div class="shrink-0">
             {% if book.coverUrl is defined and book.coverUrl %}
-                <img src="{{book.coverUrl}}" alt="Omslag till {{book.title}} "
+                <img src="{{ asset('img/covers/' ~ book.coverUrl) }}" alt="Omslag till {{book.title}} "
                     class="aspect-square w-full rounded-lg border-gray-900 object-cover" />
             {% else %}
-                <div class="aspect-square w-full rounded-lg border-2 border-gray-900 bg-gray-50"></div>
+                <img src="{{ asset("img/covers/no-image.png") }}" alt="Omslag till {{book.title}} "
+                    class="aspect-square w-full rounded-lg border-gray-900 object-cover" />
             {% endif %}
             </div>
 
@@ -44,14 +45,7 @@
                 </dl>
             </div>
             
-
-
         </div>
-
-        
-
-
-
     </div>
 </div>
 

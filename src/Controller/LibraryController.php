@@ -36,45 +36,50 @@ class LibraryController extends AbstractController
             $title  = trim((string) $request->request->get('book-title'));
             $author = trim((string) $request->request->get('author'));
             $isbn  = trim((string) $request->request->get('book-isbn'));
-            $coverFile = $request->files->get('file-upload');
+            // $coverFile = $request->files->get('file-upload');
 
             $book = new Book();
             $book->setTitle($title);
             $book->setAuthor($author);
             $book->setIsbn($isbn);
 
-            if ($coverFile instanceof UploadedFile) {
-                $violations = $validator->validate(
-                    $coverFile,
-                    new Image([
-                    'maxSize' => '5M',
-                    'mimeTypes' => ['image/jpeg', 'image/png'],
-                    'detectCorrupted' => true,
-                ])
-                );
+            // upload works locally but is blocked on the student server.
+            //  Temporarily disabled. Re-enable by removing the comment.
 
-                if ($violations->count() > 0) {
-                    return $this->render('validator.html.twig', [
-                        'name' => 'Error'
-                    ]);
-                }
+            // if ($coverFile instanceof UploadedFile) {
+            //     $violations = $validator->validate(
+            //         $coverFile,
+            //         new Image([
+            //         'maxSize' => '5M',
+            //         'mimeTypes' => ['image/jpeg', 'image/png'],
+            //         'detectCorrupted' => true,
+            //     ])
+            //     );
 
-                $mime = $coverFile->getMimeType();
-                $ext  = match ($mime) {
-                    'image/jpeg' => 'jpg',
-                    'image/png'  => 'png',
-                    default      => null,
-                };
+            //     if ($violations->count() > 0) {
+            //         return $this->render('validator.html.twig', [
+            //             'name' => 'Error'
+            //         ]);
+            //     }
 
-                $coverName = bin2hex(random_bytes(8)).'.'.$ext;
-                $coversDir = $this->getParameter('covers_dir');
-                assert(is_string($coversDir));
-                $coverFile->move($coversDir, $coverName);
-                $book->setCoverUrl('/img/covers/'.$coverName);
-            }
+            //     $mime = $coverFile->getMimeType();
+            //     $ext  = match ($mime) {
+            //         'image/jpeg' => 'jpg',
+            //         'image/png'  => 'png',
+            //         default      => null,
+            //     };
+
+            //     $coverName = bin2hex(random_bytes(8)).'.'.$ext;
+            //     $coversDir = $this->getParameter('covers_dir');
+            //     assert(is_string($coversDir));
+            //     $coverFile->move($coversDir, $coverName);
+            //     $book->setCoverUrl($coverName);
+            // }
 
             $entityManager->persist($book);
             $entityManager->flush();
+
+            return $this->redirectToRoute('library_books');
 
         }
 
@@ -139,46 +144,48 @@ class LibraryController extends AbstractController
             $title  = trim((string) $request->request->get('title'));
             $author = trim((string) $request->request->get('author'));
             $isbn  = trim((string) $request->request->get('isbn'));
-            $coverFile = $request->files->get('file-upload');
+            // $coverFile = $request->files->get('file-upload');
 
             $book->setTitle($title);
             $book->setAuthor($author);
             $book->setIsbn($isbn);
 
 
-            if ($coverFile instanceof UploadedFile) {
-                $violations = $validator->validate(
-                    $coverFile,
-                    new Image([
-                        'maxSize' => '5M',
-                        'mimeTypes' => ['image/jpeg', 'image/png'],
-                        'detectCorrupted' => true,
-                    ])
-                );
+            // upload works locally but is blocked on the student server.
+            //  Temporarily disabled. Re-enable by removing the comment.
 
-                if ($violations->count() > 0) {
-                    return $this->render('validator.html.twig', [
-                        'name' => 'Error'
-                    ]);
-                }
+            // if ($coverFile instanceof UploadedFile) {
+            //     $violations = $validator->validate(
+            //         $coverFile,
+            //         new Image([
+            //             'maxSize' => '5M',
+            //             'mimeTypes' => ['image/jpeg', 'image/png'],
+            //             'detectCorrupted' => true,
+            //         ])
+            //     );
+
+            //     if ($violations->count() > 0) {
+            //         return $this->render('validator.html.twig', [
+            //             'name' => 'Error'
+            //         ]);
+            //     }
 
 
-                $mime = $coverFile->getMimeType();
-                $ext  = match ($mime) {
-                    'image/jpeg' => 'jpg',
-                    'image/png'  => 'png',
-                    default      => null,
-                };
+            //     $mime = $coverFile->getMimeType();
+            //     $ext  = match ($mime) {
+            //         'image/jpeg' => 'jpg',
+            //         'image/png'  => 'png',
+            //         default      => null,
+            //     };
 
-                $coverName = bin2hex(random_bytes(8)).'.'.$ext;
-                $coversDir = $this->getParameter('covers_dir');
-                assert(is_string($coversDir));
-                $coverFile->move($coversDir, $coverName);
-                $book->setCoverUrl('/img/covers/'.$coverName);
-            }
+            //     $coverName = bin2hex(random_bytes(8)).'.'.$ext;
+            //     $coversDir = $this->getParameter('covers_dir');
+            //     assert(is_string($coversDir));
+            //     $coverFile->move($coversDir, $coverName);
+            //     $book->setCoverUrl($coverName);
+            // }
 
             $entityManager->flush();
-
 
             return $this->redirectToRoute('get_book_by_id', ['id' => $id]);
         }
@@ -210,7 +217,7 @@ class LibraryController extends AbstractController
         $entityManager->remove($book);
         $entityManager->flush();
 
-        return $this->redirectToRoute('library/allBooks.html.twig');
+        return $this->redirectToRoute('library_books');
     }
 
 }

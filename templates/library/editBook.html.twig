@@ -18,7 +18,7 @@
                 <div class="shrink-0">
                     <label for="file-upload" class="block cursor-pointer group relative">
                         {% if book.coverUrl is defined and book.coverUrl %}
-                            <img src="{{ book.coverUrl }}" alt="Omslag till {{ book.title }}" 
+                            <img src="{{ asset('img/covers/' ~ book.coverUrl) }}" alt="Omslag till {{ book.title }}" 
                                 class="aspect-square w-full rounded-lg border-gray-900 object-cover" />
                         {% else %}
                             <div class="aspect-square w-full rounded-lg border-2 border-gray-900 bg-gray-50"></div>
@@ -58,7 +58,7 @@
                                 Update Book
                             </button>
                         </div>
-                            <a href="{{ path("add_book") }}"
+                            <a href="{{ path("delete_book_by_id", {id: book.id}) }}"
                                 class="w-full text-center rounded-lg bg-red-500 px-10 py-3 text-base font-medium text-white  hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                                 Delete Book
                             </a>
