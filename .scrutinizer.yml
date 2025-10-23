@@ -5,7 +5,7 @@ filter:
     excluded_paths: [vendor/*, test/*, node_modules/*]
 
 build:
-    image: default-bionic
+    image: default-jammy
 
     nodes:
         my-tests:
