@@ -36,7 +36,7 @@ class LibraryController extends AbstractController
             $title  = trim((string) $request->request->get('book-title'));
             $author = trim((string) $request->request->get('author'));
             $isbn  = trim((string) $request->request->get('book-isbn'));
-            // $coverFile = $request->files->get('file-upload');
+            $coverFile = $request->files->get('file-upload');
 
             $book = new Book();
             $book->setTitle($title);
@@ -46,35 +46,35 @@ class LibraryController extends AbstractController
             // upload works locally but is blocked on the student server.
             //  Temporarily disabled. Re-enable by removing the comment.
 
-            // if ($coverFile instanceof UploadedFile) {
-            //     $violations = $validator->validate(
-            //         $coverFile,
-            //         new Image([
-            //         'maxSize' => '5M',
-            //         'mimeTypes' => ['image/jpeg', 'image/png'],
-            //         'detectCorrupted' => true,
-            //     ])
-            //     );
+            if ($coverFile instanceof UploadedFile) {
+                $violations = $validator->validate(
+                    $coverFile,
+                    new Image([
+                    'maxSize' => '5M',
+                    'mimeTypes' => ['image/jpeg', 'image/png'],
+                    'detectCorrupted' => true,
+                ])
+                );
 
-            //     if ($violations->count() > 0) {
-            //         return $this->render('validator.html.twig', [
-            //             'name' => 'Error'
-            //         ]);
-            //     }
+                if ($violations->count() > 0) {
+                    return $this->render('validator.html.twig', [
+                        'name' => 'Error'
+                    ]);
+                }
 
-            //     $mime = $coverFile->getMimeType();
-            //     $ext  = match ($mime) {
-            //         'image/jpeg' => 'jpg',
-            //         'image/png'  => 'png',
-            //         default      => null,
-            //     };
+                $mime = $coverFile->getMimeType();
+                $ext  = match ($mime) {
+                    'image/jpeg' => 'jpg',
+                    'image/png'  => 'png',
+                    default      => null,
+                };
 
-            //     $coverName = bin2hex(random_bytes(8)).'.'.$ext;
-            //     $coversDir = $this->getParameter('covers_dir');
-            //     assert(is_string($coversDir));
-            //     $coverFile->move($coversDir, $coverName);
-            //     $book->setCoverUrl($coverName);
-            // }
+                $coverName = bin2hex(random_bytes(8)).'.'.$ext;
+                $coversDir = $this->getParameter('covers_dir');
+                assert(is_string($coversDir));
+                $coverFile->move($coversDir, $coverName);
+                $book->setCoverUrl($coverName);
+            }
 
             $entityManager->persist($book);
             $entityManager->flush();
@@ -144,7 +144,7 @@ class LibraryController extends AbstractController
             $title  = trim((string) $request->request->get('title'));
             $author = trim((string) $request->request->get('author'));
             $isbn  = trim((string) $request->request->get('isbn'));
-            // $coverFile = $request->files->get('file-upload');
+            $coverFile = $request->files->get('file-upload');
 
             $book->setTitle($title);
             $book->setAuthor($author);
@@ -154,36 +154,36 @@ class LibraryController extends AbstractController
             // upload works locally but is blocked on the student server.
             //  Temporarily disabled. Re-enable by removing the comment.
 
-            // if ($coverFile instanceof UploadedFile) {
-            //     $violations = $validator->validate(
-            //         $coverFile,
-            //         new Image([
-            //             'maxSize' => '5M',
-            //             'mimeTypes' => ['image/jpeg', 'image/png'],
-            //             'detectCorrupted' => true,
-            //         ])
-            //     );
+            if ($coverFile instanceof UploadedFile) {
+                $violations = $validator->validate(
+                    $coverFile,
+                    new Image([
+                        'maxSize' => '5M',
+                        'mimeTypes' => ['image/jpeg', 'image/png'],
+                        'detectCorrupted' => true,
+                    ])
+                );
 
-            //     if ($violations->count() > 0) {
-            //         return $this->render('validator.html.twig', [
-            //             'name' => 'Error'
-            //         ]);
-            //     }
+                if ($violations->count() > 0) {
+                    return $this->render('validator.html.twig', [
+                        'name' => 'Error'
+                    ]);
+                }
 
 
-            //     $mime = $coverFile->getMimeType();
-            //     $ext  = match ($mime) {
-            //         'image/jpeg' => 'jpg',
-            //         'image/png'  => 'png',
-            //         default      => null,
-            //     };
+                $mime = $coverFile->getMimeType();
+                $ext  = match ($mime) {
+                    'image/jpeg' => 'jpg',
+                    'image/png'  => 'png',
+                    default      => null,
+                };
 
-            //     $coverName = bin2hex(random_bytes(8)).'.'.$ext;
-            //     $coversDir = $this->getParameter('covers_dir');
-            //     assert(is_string($coversDir));
-            //     $coverFile->move($coversDir, $coverName);
-            //     $book->setCoverUrl($coverName);
-            // }
+                $coverName = bin2hex(random_bytes(8)).'.'.$ext;
+                $coversDir = $this->getParameter('covers_dir');
+                assert(is_string($coversDir));
+                $coverFile->move($coversDir, $coverName);
+                $book->setCoverUrl($coverName);
+            }
 
             $entityManager->flush();
 
