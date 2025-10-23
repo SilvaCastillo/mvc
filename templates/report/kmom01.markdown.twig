@@ -47,8 +47,18 @@ Utöver testbarheten i sig, anser jag att snygg och ren kod ofta är testbar, me
 
 <a id="kmom05"></a>Kmom05
 ------------------------------
+Det gick bra, trodde att det skulle vara svårare än vad det var men det var väldigt lätt att följa instruktionerna, Doctrine verkade komplext först men med tydliga steg blev det smidigt, och att vi inte skulle göra något avancerat gjorde det att var enkelt att förstå.
 
+Jag ville att böckerna skulle visas som kort (cards) i biblioteket, där man ser omslagsbild, titel och författare. Korten är klickbara och när man klickar på en bok kommer man till en sida med bokinformation. Där visas samma uppgifter som tidigare plus ISBN samt en knapp för att redigera.
+På redigeringssidan behåller jag samma layout som på enkelvisningen, men texterna är ersatta av inmatningsfält som kan ändras. Längst ner finns två knappar, en för att spara ändringar (POST) och en för att radera boken från databasen. Raderingsknappen ligger tillsammans med redigeringsknappen men är röd för tydlighet. Det finns även ett kryss uppe till höger för att avbryta redigeringen. Samma knapp finns på visningssidan och tar användaren tillbaka till biblioteket.
+För att lägga till böcker gjorde jag ett formulär med alla nödvändiga fält. Jag lade också till filuppladdning för omslag (accepterar PNG och JPG). I visningssidorna finns en kontroll som visar en platshållarbild om boken saknar omslag.
 
+Det fungerade bra att använda ORM för CRUD. Att skapa och uppdatera databasen var väldigt smidigt med migrations och entiteter. Det här är nog första gången jag använder ett ORM. Att använda ORM mot en relationsdatabas gör arbetet enklare, både för att förstå och integrera i koden.
+Jämfört med att skriva rå SQL, upplevde jag att ett ORM gav snabbare utveckling, mindre upprepad kod (t.ex. anslutning mot DB och återkommande INSERT/UPDATE/SELECT) samt ett enklare migrationsflöde. Samtidigt kan ORM ha en inlärningskurva och göra det svårare att se exakt vad som händer när databasen och koden växer, vilket ibland gör det svårare att felsöka. I större och mer komplexa databaser kan rå SQL därför ibland vara mer träffsäkert för specifika, avancerade frågor.
+
+Min uppfattning om ORM är att det förenklar och snabbar upp utvecklingen, särskilt för CRUD och migrationer. Man slipper skriva repetitiv kod för databasanslutning och grundläggande queries, exempelvis att det finns standardfunktioner för att hämta viss data från databasen. Men, jag känner att om SQL-queries görs manuellt så har man lite bättre koll på allt. Jag hade nog ändå valt ORM om jag skulle göra en egen app med SQL som databas.
+
+TIL för detta kmom var ORM och hur man använder sig av det. Jag lärde mig även att använda instanceof UploadedFile som bara blir true om något har blivit uppladdat, och hur man använder sig av ValidatorInterface i Symfony. Det tog tid att få grepp om det hela, men jag känner mig fortfarande osäker, särskilt vad gäller getMimeType() som jag använde för att spara ner filen lokalt i rätt format.
 
 <a id="kmom06"></a>Kmom06
 ------------------------------
