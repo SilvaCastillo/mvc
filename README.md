@@ -1,6 +1,10 @@
 ![Header Image](public/img/symfonyHeader.png)
 
 # Object-Oriented Web Technologies – MVC Project
+[![Code Coverage](https://scrutinizer-ci.com/g/SilvaCastillo/mvc/badges/coverage.png?b=main)](https://scrutinizer-ci.com/g/SilvaCastillo/mvc/?branch=main)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/SilvaCastillo/mvc/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/SilvaCastillo/mvc/?branch=main)
+[![Build Status](https://scrutinizer-ci.com/g/SilvaCastillo/mvc/badges/build.png?b=main)](https://scrutinizer-ci.com/g/SilvaCastillo/mvc/build-status/main)
+
 
 Welcome to my project for the course
 This application is built using **PHP** and the **Symfony** framework, following object-oriented principles, routing, and templating with Twig. The frontend is styled using **Tailwind CSS**  for a modern and responsive design.

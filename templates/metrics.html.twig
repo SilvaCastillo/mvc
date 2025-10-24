@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Metrics analys{% endblock %}
+
+{% block content %}
+
+
+<div class="section-report">
+    <div class="w-[80%] block mx-auto pt-[100px] mb-[76px]">
+        <div class=" markdown w-full">
+            {{ include('content/metrics.markdown.twig')|markdown_to_html }}
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

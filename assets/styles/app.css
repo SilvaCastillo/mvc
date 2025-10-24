@@ -76,6 +76,10 @@ ul {
   @apply mt-4 text-[16px] leading-[1.5];
 }
 
+.markdown img { 
+  display: inline;
+}
+
 .markdown h2 {
   @apply text-[21px] text-[#111] font-normal mt-5;
 }
