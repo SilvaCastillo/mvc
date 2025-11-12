@@ -7,19 +7,20 @@ use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
-
 class ImageUploadService
 {
     private ValidatorInterface $validator;
     private string $coversDir;
 
-    public function __construct(ValidatorInterface $validator, string $coversDir
-    ){
+    public function __construct(
+        ValidatorInterface $validator,
+        string $coversDir
+    ) {
         $this->validator = $validator;
         $this->coversDir = $coversDir;
     }
 
-    public function UploadCover(UploadedFile $file): ?string
+    public function uploadCover(UploadedFile $file): ?string
     {
 
         $violations = $this->validator->validate(
@@ -49,4 +50,3 @@ class ImageUploadService
         return $fileName;
     }
 }
-
