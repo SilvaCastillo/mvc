@@ -4,15 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Repository\BookRepository;
+use App\Service\ImageUploadService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\Routing\Annotation\Route;
+
 
 class LibraryController extends AbstractController
 {
@@ -27,7 +26,7 @@ class LibraryController extends AbstractController
     }
 
     #[Route("/library/add_book", name: "add_book", methods: ['GET','POST'])]
-    public function addBook(Request $request, ManagerRegistry $doctrine, ValidatorInterface $validator): Response
+    public function addBook(Request $request, ManagerRegistry $doctrine, ImageUploadService $imageService): Response
     {
         $entityManager = $doctrine->getManager();
 
@@ -47,32 +46,13 @@ class LibraryController extends AbstractController
             //  Temporarily disabled. Re-enable by removing the comment.
 
             if ($coverFile instanceof UploadedFile) {
-                $violations = $validator->validate(
-                    $coverFile,
-                    new Image([
-                    'maxSize' => '5M',
-                    'mimeTypes' => ['image/jpeg', 'image/png'],
-                    'detectCorrupted' => true,
-                ])
-                );
-
-                if ($violations->count() > 0) {
+                $coverName = $imageService->uploadCover($coverFile);
+                if ($coverName === null) {
                     return $this->render('validator.html.twig', [
                         'name' => 'Error'
                     ]);
                 }
 
-                $mime = $coverFile->getMimeType();
-                $ext  = match ($mime) {
-                    'image/jpeg' => 'jpg',
-                    'image/png'  => 'png',
-                    default      => null,
-                };
-
-                $coverName = bin2hex(random_bytes(8)).'.'.$ext;
-                $coversDir = $this->getParameter('covers_dir');
-                assert(is_string($coversDir));
-                $coverFile->move($coversDir, $coverName);
                 $book->setCoverUrl($coverName);
             }
 
@@ -128,7 +108,7 @@ class LibraryController extends AbstractController
 
 
     #[Route("/library/book/{id<\d+>}/edit", name: "update_book", methods: ['GET','POST'])]
-    public function updateBook(BookRepository $bookRepository, int $id, Request $request, ManagerRegistry $doctrine, ValidatorInterface $validator): Response
+    public function updateBook(BookRepository $bookRepository, int $id, Request $request, ManagerRegistry $doctrine, ImageUploadService $imageService): Response
     {
         $book = $bookRepository
             ->find($id);
@@ -155,33 +135,13 @@ class LibraryController extends AbstractController
             //  Temporarily disabled. Re-enable by removing the comment.
 
             if ($coverFile instanceof UploadedFile) {
-                $violations = $validator->validate(
-                    $coverFile,
-                    new Image([
-                        'maxSize' => '5M',
-                        'mimeTypes' => ['image/jpeg', 'image/png'],
-                        'detectCorrupted' => true,
-                    ])
-                );
-
-                if ($violations->count() > 0) {
+                $coverName = $imageService->uploadCover($coverFile);
+                if ($coverName === null) {
                     return $this->render('validator.html.twig', [
                         'name' => 'Error'
                     ]);
                 }
 
-
-                $mime = $coverFile->getMimeType();
-                $ext  = match ($mime) {
-                    'image/jpeg' => 'jpg',
-                    'image/png'  => 'png',
-                    default      => null,
-                };
-
-                $coverName = bin2hex(random_bytes(8)).'.'.$ext;
-                $coversDir = $this->getParameter('covers_dir');
-                assert(is_string($coversDir));
-                $coverFile->move($coversDir, $coverName);
                 $book->setCoverUrl($coverName);
             }
 
@@ -189,7 +149,6 @@ class LibraryController extends AbstractController
 
             return $this->redirectToRoute('get_book_by_id', ['id' => $id]);
         }
-
 
         $data = [
             'name' => 'Book',
@@ -219,5 +178,4 @@ class LibraryController extends AbstractController
 
         return $this->redirectToRoute('library_books');
     }
-
 }
