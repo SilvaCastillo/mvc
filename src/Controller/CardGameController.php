@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-// CardGameService
 use App\Card\DeckOfCards;
 use App\Service\CardGameService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
