@@ -6,6 +6,7 @@ use App\Card\Card;
 use App\Card\DeckOfCards;
 use App\Repository\BookRepository;
 use App\Service\CardGameService;
+use App\Service\Game21Service;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -151,23 +152,13 @@ class ApiController extends AbstractController
     * @SuppressWarnings("UnusedLocalVariable")
     */
     #[Route('/api/game', name: 'api_game')]
-    public function apiGame(SessionInterface $session): JsonResponse
+    public function apiGame(Game21Service $game21): JsonResponse
     {
-        $players = ['player', 'banker'];
-        $playerCards = $session->get('drawnPlayerCards', []);
-        $bankerCards = $session->get('drawnBankCards', []);
-        $playerIntValue = 0;
-        $bankerIntValue = 0;
-        $playerCardsAsString = "";
-        $bankerCardsAsString = "";
+        $playerIntValue = $game21->getPlayerScore('player');
+        $bankerIntValue = $game21->getPlayerScore('banker');
 
-        foreach ($players as $player) {
-            /** @phpstan-ignore-next-line */
-            foreach (${$player . "Cards"} as $card) {
-                ${$player . "IntValue"} += $card->getIntValue();
-                ${$player . "CardsAsString"} = $card->getAsString();
-            }
-        }
+        $playerCardsAsString = $game21->getDrawnCardsAsString('player');
+        $bankerCardsAsString = $game21->getDrawnCardsAsString('banker');
 
         $data = [
             'name' => '21 game',
