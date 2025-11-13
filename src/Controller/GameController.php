@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Card\DeckOfCards;
 use App\Card\CardGraphic;
-use App\game\Game21;
+use App\Service\Game21Service;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -25,7 +25,7 @@ class GameController extends AbstractController
 
 
     #[Route('/game/init', name: 'game_init')]
-    public function gameInit(Game21 $game21): Response
+    public function gameInit(Game21Service $game21): Response
     {
         $game21->initializeGame();
         return $this->redirectToRoute('game_play');
@@ -36,7 +36,7 @@ class GameController extends AbstractController
     * @SuppressWarnings("PHPMD.ElseExpression")
     */
     #[Route('/game/game_play', name: 'game_play')]
-    public function gamePlay(SessionInterface $session, Game21 $game21): Response
+    public function gamePlay(SessionInterface $session, Game21Service $game21): Response
     {
         $winner = " ";
         $playerTurn = $session->get("player_turn");

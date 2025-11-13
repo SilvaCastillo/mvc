@@ -1,6 +1,6 @@
 <?php
 
-namespace App\game;
+namespace App\Service;
 
 use App\Card\DeckOfCards;
 use App\Card\CardGraphic;
@@ -8,7 +8,7 @@ use App\Card\Card;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class Game21
+class Game21Service
 {
     private SessionInterface $session;
 
