@@ -29,7 +29,7 @@ class CardGameService
     }
 
     /**
-     * @return list<string>
+     * @return string[]
      */
     public function getDeckAsString(DeckOfCards $deck): array
     {
