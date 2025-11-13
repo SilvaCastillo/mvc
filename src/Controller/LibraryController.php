@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 class LibraryController extends AbstractController
 {
     #[Route("/library", name: "library_start")]
@@ -87,7 +86,6 @@ class LibraryController extends AbstractController
     #[Route("/library/book/{id<\d+>}", name: "get_book_by_id")]
     public function getBookById(BookRepository $bookRepository, int $id): Response
     {
-
         $book = $bookRepository
             ->find($id);
 
@@ -96,7 +94,6 @@ class LibraryController extends AbstractController
                 'No book found with id '.$id
             );
         }
-
 
         $data = [
             'name' => 'Book',
@@ -130,7 +127,6 @@ class LibraryController extends AbstractController
             $book->setAuthor($author);
             $book->setIsbn($isbn);
 
-
             // upload works locally but is blocked on the student server.
             //  Temporarily disabled. Re-enable by removing the comment.
 
@@ -162,7 +158,6 @@ class LibraryController extends AbstractController
     #[Route("/library/delete/{id<\d+>}", name: "delete_book_by_id")]
     public function deleteBookById(BookRepository $bookRepository, int $id, ManagerRegistry $doctrine): Response
     {
-
         $book = $bookRepository
             ->find($id);
 
