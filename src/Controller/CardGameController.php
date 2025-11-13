@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+// CardGameService
 use App\Card\DeckOfCards;
+use App\Service\CardGameService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -21,22 +23,10 @@ class CardGameController extends AbstractController
     }
 
     #[Route("/card/deck", name: "card_deck")]
-    public function deck(SessionInterface $session): Response
+    public function deck(CardGameService $cardGameService): Response
     {
-        if (!$session->has("deck")) {
-            $deck = new DeckOfCards();
-            $deck->shuffle();
-            $session->set('deck', $deck);
-        }
-
-        /** @var DeckOfCards $deck */
-        $deck = $session->get("deck");
-        $getDeck = $deck->getDeck();
-
-        $cardsAsString = array();
-        foreach ($getDeck as $card) {
-            $cardsAsString[] = $card->getAsString();
-        }
+        $deck = $cardGameService->getDeck();
+        $cardsAsString = $cardGameService->getDeckAsString($deck);
 
         $data = [
             'name' => 'Card Deck',
@@ -47,19 +37,13 @@ class CardGameController extends AbstractController
     }
 
     #[Route("/card/deck/shuffle", name: "deck_shuffle")]
-    public function deckShuffle(SessionInterface $session): Response
+    public function deckShuffle(SessionInterface $session, CardGameService $cardGameService): Response
     {
-
         $deck = new DeckOfCards();
         $deck->shuffle();
-        $getDeck = $deck->getDeck();
-
         $session->set('deck', $deck);
 
-        $cardsAsString = array();
-        foreach ($getDeck as $card) {
-            $cardsAsString[] = $card->getAsString();
-        }
+        $cardsAsString = $cardGameService->getDeckAsString($deck);
 
         $data = [
             'name' => 'Card Deck',
@@ -70,19 +54,12 @@ class CardGameController extends AbstractController
     }
 
     #[Route("/card/deck/draw", name: "card_draw")]
-    public function deckDraw(SessionInterface $session): Response
+    public function deckDraw(SessionInterface $session, CardGameService $cardGameService): Response
     {
 
-        if (!$session->has("deck")) {
-            $deck = new DeckOfCards();
-            $deck->shuffle();
-            $session->set('deck', $deck);
-        }
 
-        /** @var DeckOfCards $deck */
-        $deck = $session->get("deck");
+        $deck = $cardGameService->getDeck();
         $cardDrawn = $deck->draw();
-
         if ($cardDrawn === null) {
             $session->set('deck', $deck);
             $this->addFlash('warning', 'No more cards left!');
@@ -92,6 +69,8 @@ class CardGameController extends AbstractController
 
         $cardsAsString = array();
         $cardsAsString[] = $cardDrawn[0]->getAsString();
+
+
         $session->set('deck', $deck);
         $remainingCards = $deck->getRemaining();
 
@@ -105,17 +84,9 @@ class CardGameController extends AbstractController
     }
 
     #[Route("/card/deck/draw/{number<\d+>}", name: "draw_amount")]
-    public function deckDrawMulti(SessionInterface $session, int $number): Response
+    public function deckDrawMulti(CardGameService $cardGameService, SessionInterface $session, int $number): Response
     {
-
-        if (!$session->has("deck")) {
-            $deck = new DeckOfCards();
-            $deck->shuffle();
-            $session->set('deck', $deck);
-        }
-
-        /** @var DeckOfCards $deck */
-        $deck = $session->get("deck");
+        $deck = $cardGameService->getDeck();
         $cardsDrawn = $deck->draw($number);
 
         if ($cardsDrawn === null) {
@@ -124,11 +95,7 @@ class CardGameController extends AbstractController
             return $this->redirectToRoute('card_deck');
         }
 
-        $cardsAsString = array();
-        foreach ($cardsDrawn as $card) {
-            $cardsAsString[] = $card->getAsString();
-        }
-
+        $cardsAsString = $cardGameService->getDeckAsString($deck);
 
         $session->set('deck', $deck);
         $remainingCards = $deck->getRemaining();

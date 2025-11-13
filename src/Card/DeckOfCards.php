@@ -45,7 +45,7 @@ class DeckOfCards
      *
      * @return CardGraphic[] The array of remaining cards in the deck.
     */
-    public function getDeck(): array
+    public function getCards(): array
     {
         return $this->cards;
     }

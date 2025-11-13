@@ -24,7 +24,7 @@ class DeckOfCardsTest extends TestCase
     public function testGetDeck(): void
     {
         $deckOfCards = new DeckOfCards();
-        $deck = $deckOfCards->getDeck();
+        $deck = $deckOfCards->getCards();
 
         $this->assertCount(52, $deck);
     }
@@ -37,9 +37,9 @@ class DeckOfCardsTest extends TestCase
     public function testShuffleDeck(): void
     {
         $deckOfCards = new DeckOfCards();
-        $deck = $deckOfCards->getDeck();
+        $deck = $deckOfCards->getCards();
         $deckOfCards->shuffle();
-        $shuffledDeck = $deckOfCards->getDeck();
+        $shuffledDeck = $deckOfCards->getCards();
         $this->assertNotEquals($deck, $shuffledDeck);
     }
 
@@ -77,7 +77,7 @@ class DeckOfCardsTest extends TestCase
     {
         $deckOfCards = new DeckOfCards();
         $deckOfCards->draw(2);
-        $deck = $deckOfCards->getDeck();
+        $deck = $deckOfCards->getCards();
 
         $this->assertCount(50, $deck);
     }
