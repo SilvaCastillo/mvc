@@ -3,13 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+
 use App\Repository\BookRepository;
 use App\Service\ImageUploadService;
+use App\Service\BookService;
+
+
 use Doctrine\Persistence\ManagerRegistry;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 use Symfony\Component\Routing\Annotation\Route;
 
 class LibraryController extends AbstractController
@@ -25,9 +32,8 @@ class LibraryController extends AbstractController
     }
 
     #[Route("/library/add_book", name: "add_book", methods: ['GET','POST'])]
-    public function addBook(Request $request, ManagerRegistry $doctrine, ImageUploadService $imageService): Response
+    public function addBook(Request $request, ManagerRegistry $doctrine, BookService $bookService): Response
     {
-        $entityManager = $doctrine->getManager();
 
         if ($request->isMethod('POST')) {
 
@@ -36,27 +42,10 @@ class LibraryController extends AbstractController
             $isbn  = trim((string) $request->request->get('book-isbn'));
             $coverFile = $request->files->get('file-upload');
 
-            $book = new Book();
-            $book->setTitle($title);
-            $book->setAuthor($author);
-            $book->setIsbn($isbn);
 
-            // upload works locally but is blocked on the student server.
-            //  Temporarily disabled. Re-enable by removing the comment.
-
-            if ($coverFile instanceof UploadedFile) {
-                $coverName = $imageService->uploadCover($coverFile);
-                if ($coverName === null) {
-                    return $this->render('validator.html.twig', [
-                        'name' => 'Error'
-                    ]);
-                }
-
-                $book->setCoverUrl($coverName);
-            }
-
-            $entityManager->persist($book);
-            $entityManager->flush();
+            // // upload works locally but is blocked on the student server.
+            // //  Temporarily disabled. Re-enable by removing the comment.
+            $bookService->addBook($title, $author, $isbn, $coverFile);
 
             return $this->redirectToRoute('library_books');
 
@@ -105,7 +94,7 @@ class LibraryController extends AbstractController
 
 
     #[Route("/library/book/{id<\d+>}/edit", name: "update_book", methods: ['GET','POST'])]
-    public function updateBook(BookRepository $bookRepository, int $id, Request $request, ManagerRegistry $doctrine, ImageUploadService $imageService): Response
+    public function updateBook(BookRepository $bookRepository, int $id, Request $request, ManagerRegistry $doctrine, BookService $bookService): Response
     {
         $book = $bookRepository
             ->find($id);
@@ -123,25 +112,10 @@ class LibraryController extends AbstractController
             $isbn  = trim((string) $request->request->get('isbn'));
             $coverFile = $request->files->get('file-upload');
 
-            $book->setTitle($title);
-            $book->setAuthor($author);
-            $book->setIsbn($isbn);
 
             // upload works locally but is blocked on the student server.
             //  Temporarily disabled. Re-enable by removing the comment.
-
-            if ($coverFile instanceof UploadedFile) {
-                $coverName = $imageService->uploadCover($coverFile);
-                if ($coverName === null) {
-                    return $this->render('validator.html.twig', [
-                        'name' => 'Error'
-                    ]);
-                }
-
-                $book->setCoverUrl($coverName);
-            }
-
-            $entityManager->flush();
+            $bookService->updateBook($book, $title, $author, $isbn, $coverFile);
 
             return $this->redirectToRoute('get_book_by_id', ['id' => $id]);
         }
