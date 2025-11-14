@@ -78,13 +78,8 @@ class Game21Service
     }
 
 
-    public function checkWinner(): string
+    public function checkWinner(int $player, int $banker): string
     {
-        /** @var int $player */
-        $player = $this->session->get('deckValueIntPlayer');
-
-        /** @var int $banker */
-        $banker = $this->session->get('deckValueIntBanker');
         $winner = "";
 
         if ($player > 21) {

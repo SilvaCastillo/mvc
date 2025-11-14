@@ -70,7 +70,7 @@ class GameController extends AbstractController
         $gameStatus = $session->get('game_start');
 
         if ($gameStatus == false) {
-            $winner = $game21->checkWinner();
+            $winner = $game21->checkWinner($deckValueIntPlayer, $deckValueIntBanker);
         }
 
         $data = [
