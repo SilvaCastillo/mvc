@@ -15,8 +15,7 @@ class BookService
     public function __construct(
         ManagerRegistry $doctrine,
         ImageUploadService $imageService
-    )
-    {
+    ) {
         $this->doctrine = $doctrine;
         $this->imageService = $imageService;
     }
@@ -30,11 +29,11 @@ class BookService
 
 
         if ($coverFile instanceof UploadedFile) {
-                $coverName = $this->imageService->uploadCover($coverFile);
-                if ($coverName !== null) {
-                    $book->setCoverUrl($coverName);
-                }
+            $coverName = $this->imageService->uploadCover($coverFile);
+            if ($coverName !== null) {
+                $book->setCoverUrl($coverName);
             }
+        }
 
         $entityManager = $this->doctrine->getManager();
         $entityManager->persist($book);
@@ -51,13 +50,20 @@ class BookService
 
 
         if ($coverFile instanceof UploadedFile) {
-                $coverName = $this->imageService->uploadCover($coverFile);
-                if ($coverName !== null) {
-                    $book->setCoverUrl($coverName);
-                }
+            $coverName = $this->imageService->uploadCover($coverFile);
+            if ($coverName !== null) {
+                $book->setCoverUrl($coverName);
             }
+        }
 
         $entityManager = $this->doctrine->getManager();
+        $entityManager->flush();
+    }
+
+    public function deleteBook(Book $book): void
+    {
+        $entityManager = $this->doctrine->getManager();
+        $entityManager->remove($book);
         $entityManager->flush();
     }
 }

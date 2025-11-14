@@ -2,21 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Book;
-
 use App\Repository\BookRepository;
-use App\Service\ImageUploadService;
 use App\Service\BookService;
-
-
 use Doctrine\Persistence\ManagerRegistry;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 use Symfony\Component\Routing\Annotation\Route;
 
 class LibraryController extends AbstractController
@@ -32,7 +24,7 @@ class LibraryController extends AbstractController
     }
 
     #[Route("/library/add_book", name: "add_book", methods: ['GET','POST'])]
-    public function addBook(Request $request, ManagerRegistry $doctrine, BookService $bookService): Response
+    public function addBook(Request $request, BookService $bookService): Response
     {
 
         if ($request->isMethod('POST')) {
@@ -40,6 +32,8 @@ class LibraryController extends AbstractController
             $title  = trim((string) $request->request->get('book-title'));
             $author = trim((string) $request->request->get('author'));
             $isbn  = trim((string) $request->request->get('book-isbn'));
+
+            /** @var UploadedFile|null $coverFile */
             $coverFile = $request->files->get('file-upload');
 
 
@@ -94,7 +88,7 @@ class LibraryController extends AbstractController
 
 
     #[Route("/library/book/{id<\d+>}/edit", name: "update_book", methods: ['GET','POST'])]
-    public function updateBook(BookRepository $bookRepository, int $id, Request $request, ManagerRegistry $doctrine, BookService $bookService): Response
+    public function updateBook(BookRepository $bookRepository, int $id, Request $request, BookService $bookService): Response
     {
         $book = $bookRepository
             ->find($id);
@@ -106,10 +100,11 @@ class LibraryController extends AbstractController
         }
 
         if ($request->isMethod('POST')) {
-            $entityManager = $doctrine->getManager();
             $title  = trim((string) $request->request->get('title'));
             $author = trim((string) $request->request->get('author'));
             $isbn  = trim((string) $request->request->get('isbn'));
+
+            /** @var UploadedFile|null $coverFile */
             $coverFile = $request->files->get('file-upload');
 
 
@@ -130,7 +125,7 @@ class LibraryController extends AbstractController
 
 
     #[Route("/library/delete/{id<\d+>}", name: "delete_book_by_id")]
-    public function deleteBookById(BookRepository $bookRepository, int $id, ManagerRegistry $doctrine): Response
+    public function deleteBookById(BookRepository $bookRepository, int $id, BookService $bookService): Response
     {
         $book = $bookRepository
             ->find($id);
@@ -141,9 +136,7 @@ class LibraryController extends AbstractController
             );
         }
 
-        $entityManager = $doctrine->getManager();
-        $entityManager->remove($book);
-        $entityManager->flush();
+        $bookService->deleteBook($book);
 
         return $this->redirectToRoute('library_books');
     }
