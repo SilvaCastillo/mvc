@@ -17,11 +17,17 @@ class BookServiceTest extends TestCase
      * @var EntityManagerInterface&MockObject
      */
     private EntityManagerInterface  $entityMan;
+    /**
+     * @var ManagerRegistry&MockObject
+     */
     private ManagerRegistry $doctrine;
     /**
      * @var ImageUploadService&MockObject
      */
     private ImageUploadService $imageService;
+    /**
+     * @var UploadedFile&MockObject
+     */
     private UploadedFile $uploadedFile;
 
     protected function setUp(): void
