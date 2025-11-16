@@ -1,12 +1,12 @@
 <?php
 
 namespace App\tests\Service;
+
 use App\Service\CardGameService;
 use App\Card\DeckOfCards;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-
 
 class CardGameServiceTest extends TestCase
 {
@@ -49,9 +49,21 @@ class CardGameServiceTest extends TestCase
     public function testGetDeckReturnsExistingDeck(): void
     {
         $existingDeck = new DeckOfCards();
-        $this->sessionStorage ['deck']= $existingDeck;
+        $this->sessionStorage ['deck'] = $existingDeck;
         $deck = $this->cardGame->getDeck();
 
         $this->assertSame($existingDeck, $deck);
+    }
+
+    public function testGetDeckAsString(): void
+    {
+        $deck = new DeckOfCards();
+        $deckAsString = $this->cardGame->getDeckAsString($deck);
+
+
+        $this->assertCount(52, $deckAsString);
+        foreach ($deckAsString as $cardAsString) {
+            $this->assertMatchesRegularExpression('/[♥♦♠♣]/', $cardAsString);
+        }
     }
 }
