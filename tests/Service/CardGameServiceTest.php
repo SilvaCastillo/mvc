@@ -36,4 +36,14 @@ class CardGameServiceTest extends TestCase
         $this->cardGame = new CardGameService($requestStack);
 
     }
+
+    public function testGetDeckWithNoExistingDeck(): void
+    {
+        $deck = $this->cardGame->getDeck();
+
+        $this->assertInstanceOf(DeckOfCards::class, $deck);
+        $this->assertArrayHasKey('deck', $this->sessionStorage);
+        $this->assertCount(52, $deck->getCards());
+    }
+
 }
