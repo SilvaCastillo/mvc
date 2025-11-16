@@ -46,4 +46,12 @@ class CardGameServiceTest extends TestCase
         $this->assertCount(52, $deck->getCards());
     }
 
+    public function testGetDeckReturnsExistingDeck(): void
+    {
+        $existingDeck = new DeckOfCards();
+        $this->sessionStorage ['deck']= $existingDeck;
+        $deck = $this->cardGame->getDeck();
+
+        $this->assertSame($existingDeck, $deck);
+    }
 }
