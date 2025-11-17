@@ -86,10 +86,10 @@ Search.appendIndex(
             "summary": "Creates\u0020the\u0020full\u002052\u002Dcard\u0020of\u0020CardGraphic\u0020objects.",
             "url": "classes/App-Card-DeckOfCards.html#method_createDeck"
         },                {
-            "fqsen": "\\App\\Card\\DeckOfCards\u003A\u003AgetDeck\u0028\u0029",
-            "name": "getDeck",
+            "fqsen": "\\App\\Card\\DeckOfCards\u003A\u003AgetCards\u0028\u0029",
+            "name": "getCards",
             "summary": "Returns\u0020the\u0020current\u0020deck\u0020of\u0020cards.",
-            "url": "classes/App-Card-DeckOfCards.html#method_getDeck"
+            "url": "classes/App-Card-DeckOfCards.html#method_getCards"
         },                {
             "fqsen": "\\App\\Card\\DeckOfCards\u003A\u003Ashuffle\u0028\u0029",
             "name": "shuffle",
@@ -286,6 +286,16 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Controller-LuckyController.html#method_number"
         },                {
+            "fqsen": "\\App\\Controller\\MetricsController",
+            "name": "MetricsController",
+            "summary": "",
+            "url": "classes/App-Controller-MetricsController.html"
+        },                {
+            "fqsen": "\\App\\Controller\\MetricsController\u003A\u003AmetricsIndex\u0028\u0029",
+            "name": "metricsIndex",
+            "summary": "",
+            "url": "classes/App-Controller-MetricsController.html#method_metricsIndex"
+        },                {
             "fqsen": "\\App\\Controller\\SessionController",
             "name": "SessionController",
             "summary": "",
@@ -376,46 +386,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/App-Entity-Book.html#property_coverUrl"
         },                {
-            "fqsen": "\\App\\game\\Game21",
-            "name": "Game21",
-            "summary": "",
-            "url": "classes/App-game-Game21.html"
-        },                {
-            "fqsen": "\\App\\game\\Game21\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "",
-            "url": "classes/App-game-Game21.html#method___construct"
-        },                {
-            "fqsen": "\\App\\game\\Game21\u003A\u003AinitializeGame\u0028\u0029",
-            "name": "initializeGame",
-            "summary": "",
-            "url": "classes/App-game-Game21.html#method_initializeGame"
-        },                {
-            "fqsen": "\\App\\game\\Game21\u003A\u003AdrawCardForPlayer\u0028\u0029",
-            "name": "drawCardForPlayer",
-            "summary": "",
-            "url": "classes/App-game-Game21.html#method_drawCardForPlayer"
-        },                {
-            "fqsen": "\\App\\game\\Game21\u003A\u003AgetPlayerScore\u0028\u0029",
-            "name": "getPlayerScore",
-            "summary": "",
-            "url": "classes/App-game-Game21.html#method_getPlayerScore"
-        },                {
-            "fqsen": "\\App\\game\\Game21\u003A\u003AgetDrawnCardsAsString\u0028\u0029",
-            "name": "getDrawnCardsAsString",
-            "summary": "",
-            "url": "classes/App-game-Game21.html#method_getDrawnCardsAsString"
-        },                {
-            "fqsen": "\\App\\game\\Game21\u003A\u003AcheckWinner\u0028\u0029",
-            "name": "checkWinner",
-            "summary": "",
-            "url": "classes/App-game-Game21.html#method_checkWinner"
-        },                {
-            "fqsen": "\\App\\game\\Game21\u003A\u003A\u0024session",
-            "name": "session",
-            "summary": "",
-            "url": "classes/App-game-Game21.html#property_session"
-        },                {
             "fqsen": "\\App\\Kernel",
             "name": "Kernel",
             "summary": "",
@@ -435,6 +405,131 @@ Search.appendIndex(
             "name": "findBookByIsbn",
             "summary": "",
             "url": "classes/App-Repository-BookRepository.html#method_findBookByIsbn"
+        },                {
+            "fqsen": "\\App\\Service\\BookService",
+            "name": "BookService",
+            "summary": "",
+            "url": "classes/App-Service-BookService.html"
+        },                {
+            "fqsen": "\\App\\Service\\BookService\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Service-BookService.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Service\\BookService\u003A\u003AaddBook\u0028\u0029",
+            "name": "addBook",
+            "summary": "",
+            "url": "classes/App-Service-BookService.html#method_addBook"
+        },                {
+            "fqsen": "\\App\\Service\\BookService\u003A\u003AupdateBook\u0028\u0029",
+            "name": "updateBook",
+            "summary": "",
+            "url": "classes/App-Service-BookService.html#method_updateBook"
+        },                {
+            "fqsen": "\\App\\Service\\BookService\u003A\u003AdeleteBook\u0028\u0029",
+            "name": "deleteBook",
+            "summary": "",
+            "url": "classes/App-Service-BookService.html#method_deleteBook"
+        },                {
+            "fqsen": "\\App\\Service\\BookService\u003A\u003A\u0024doctrine",
+            "name": "doctrine",
+            "summary": "",
+            "url": "classes/App-Service-BookService.html#property_doctrine"
+        },                {
+            "fqsen": "\\App\\Service\\BookService\u003A\u003A\u0024imageService",
+            "name": "imageService",
+            "summary": "",
+            "url": "classes/App-Service-BookService.html#property_imageService"
+        },                {
+            "fqsen": "\\App\\Service\\CardGameService",
+            "name": "CardGameService",
+            "summary": "",
+            "url": "classes/App-Service-CardGameService.html"
+        },                {
+            "fqsen": "\\App\\Service\\CardGameService\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Service-CardGameService.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Service\\CardGameService\u003A\u003AgetDeck\u0028\u0029",
+            "name": "getDeck",
+            "summary": "",
+            "url": "classes/App-Service-CardGameService.html#method_getDeck"
+        },                {
+            "fqsen": "\\App\\Service\\CardGameService\u003A\u003AgetDeckAsString\u0028\u0029",
+            "name": "getDeckAsString",
+            "summary": "",
+            "url": "classes/App-Service-CardGameService.html#method_getDeckAsString"
+        },                {
+            "fqsen": "\\App\\Service\\CardGameService\u003A\u003A\u0024session",
+            "name": "session",
+            "summary": "",
+            "url": "classes/App-Service-CardGameService.html#property_session"
+        },                {
+            "fqsen": "\\App\\Service\\Game21Service",
+            "name": "Game21Service",
+            "summary": "",
+            "url": "classes/App-Service-Game21Service.html"
+        },                {
+            "fqsen": "\\App\\Service\\Game21Service\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Service-Game21Service.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Service\\Game21Service\u003A\u003AinitializeGame\u0028\u0029",
+            "name": "initializeGame",
+            "summary": "",
+            "url": "classes/App-Service-Game21Service.html#method_initializeGame"
+        },                {
+            "fqsen": "\\App\\Service\\Game21Service\u003A\u003AdrawCardForPlayer\u0028\u0029",
+            "name": "drawCardForPlayer",
+            "summary": "",
+            "url": "classes/App-Service-Game21Service.html#method_drawCardForPlayer"
+        },                {
+            "fqsen": "\\App\\Service\\Game21Service\u003A\u003AgetPlayerScore\u0028\u0029",
+            "name": "getPlayerScore",
+            "summary": "",
+            "url": "classes/App-Service-Game21Service.html#method_getPlayerScore"
+        },                {
+            "fqsen": "\\App\\Service\\Game21Service\u003A\u003AgetDrawnCardsAsString\u0028\u0029",
+            "name": "getDrawnCardsAsString",
+            "summary": "",
+            "url": "classes/App-Service-Game21Service.html#method_getDrawnCardsAsString"
+        },                {
+            "fqsen": "\\App\\Service\\Game21Service\u003A\u003AcheckWinner\u0028\u0029",
+            "name": "checkWinner",
+            "summary": "",
+            "url": "classes/App-Service-Game21Service.html#method_checkWinner"
+        },                {
+            "fqsen": "\\App\\Service\\Game21Service\u003A\u003A\u0024session",
+            "name": "session",
+            "summary": "",
+            "url": "classes/App-Service-Game21Service.html#property_session"
+        },                {
+            "fqsen": "\\App\\Service\\ImageUploadService",
+            "name": "ImageUploadService",
+            "summary": "",
+            "url": "classes/App-Service-ImageUploadService.html"
+        },                {
+            "fqsen": "\\App\\Service\\ImageUploadService\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "",
+            "url": "classes/App-Service-ImageUploadService.html#method___construct"
+        },                {
+            "fqsen": "\\App\\Service\\ImageUploadService\u003A\u003AuploadCover\u0028\u0029",
+            "name": "uploadCover",
+            "summary": "",
+            "url": "classes/App-Service-ImageUploadService.html#method_uploadCover"
+        },                {
+            "fqsen": "\\App\\Service\\ImageUploadService\u003A\u003A\u0024validator",
+            "name": "validator",
+            "summary": "",
+            "url": "classes/App-Service-ImageUploadService.html#property_validator"
+        },                {
+            "fqsen": "\\App\\Service\\ImageUploadService\u003A\u003A\u0024coversDir",
+            "name": "coversDir",
+            "summary": "",
+            "url": "classes/App-Service-ImageUploadService.html#property_coversDir"
         },                {
             "fqsen": "\\",
             "name": "\\",
@@ -456,11 +551,6 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/app-entity.html"
         },                {
-            "fqsen": "\\App\\game",
-            "name": "game",
-            "summary": "",
-            "url": "namespaces/app-game.html"
-        },                {
             "fqsen": "\\App",
             "name": "App",
             "summary": "",
@@ -470,5 +560,10 @@ Search.appendIndex(
             "name": "Repository",
             "summary": "",
             "url": "namespaces/app-repository.html"
+        },                {
+            "fqsen": "\\App\\Service",
+            "name": "Service",
+            "summary": "",
+            "url": "namespaces/app-service.html"
         }            ]
 );
