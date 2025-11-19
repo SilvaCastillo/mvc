@@ -84,6 +84,14 @@ ul {
   @apply text-[21px] text-[#111] font-normal mt-5;
 }
 
+.content-section .content.blackjack-markdown h2{
+  @apply text-2xl text-amber-100 font-serif mt-6;
+}
+
+.content-section .content.blackjack-markdown p{
+  @apply text-2xl text-gray-100 font-serif mt-6;
+}
+
 .markdown p {
   @apply text-[17px] leading-[1.5] mt-4;
 }
