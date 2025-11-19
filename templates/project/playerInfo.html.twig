@@ -1,0 +1,55 @@
+{% extends "project/base.html.twig" %}
+
+{% block title %}Amount of hands{% endblock %}
+
+{% block content %}
+
+<div class="container mb-16">
+			<form method="post" action="{{ path('add_book') }}" enctype="multipart/form-data" class="mx-auto max-w-md w-full px-4">
+				<div class="space-y-12 bg-emerald-800 text-gray-100 ring-1 ring-inset ring-emerald-600 border-2 rounded-2xl border-solid border-emerald-600">
+					<div class=" pb-12">
+						<h2 class="mt-8 text-center text-2xl font-semibold text-amber-100">Game Setup </h2>
+						<div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+
+							<div class="sm:col-span-4 sm:col-start-2">
+								<label for="blackjack-name" class="block text-sm/6 font-medium text-gray-100 mb-2">Name</label>
+								<div class="mt-2">
+									<input id="blackjack-name" required pattern="\d{13}" type="text" name="blackjack-name" inputmode="numeric" autocomplete="family-name" class="block w-full rounded-md bg-gray-900 text-gray-100 ring-1 ring-inset ring-emerald-600 focus:ring-2 focus:ring-amber-500 px-3 py-1.5 text-base outline outline-1 -outline-offset-1 outline-emerald-600 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-500 sm:text-sm/6" />
+								</div>
+							</div>
+							<div class="sm:col-span-4 sm:col-start-2">
+								<label for="blackjack_playerhands" class="block text-sm font-medium text-gray-100 mb-2">
+									Hands
+								</label>
+								<div class="mt-2 relative">
+									<select 
+										id="blackjack_playerhands" 
+										name="blackjack_playerhands" 
+										required
+										class="block w-full appearance-none rounded-md bg-gray-900 text-gray-100 border-2 border-gray-600 focus:border-amber-500 focus:ring-2 focus:ring-amber-500 px-4 py-2 pr-10 text-base outline-none transition-colors cursor-pointer hover:border-amber-400"
+									>
+										<option value="" disabled selected>Amount of hands...</option>
+										<option value="1">1 hand</option>
+										<option value="2">2 hands</option>
+										<option value="3">3 hands</option>
+									</select>
+									
+									<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+										<svg class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+											<path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+										</svg>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mt-9 pr-8 flex items-center justify-end gap-x-6">
+							<a href="{{ path('blackjack_game') }}" 
+							<button type="button" class="px-5 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md text-sm/6 font-medium transition-colors ">Cancel</button></a>
+							<button type="submit" class="rounded-md bg-amber-500 px-5 py-2 text-sm font-semibold text-white shadow-xs hover:bg-amber-600focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 dark:bg-amber-600dark:shadow-none dark:focus-visible:outline-amber-600 transition-colors">Start</button>
+						</div>
+					</div>
+				</div>
+			</form>
+</div>
+
+{% endblock %}
