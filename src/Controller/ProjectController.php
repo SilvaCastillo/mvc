@@ -16,7 +16,7 @@ class ProjectController extends AbstractController
             'name' => 'Black Jack'
         ];
 
-        return $this->render('project/base.html.twig', $data);
+        return $this->render('project/home.html.twig', $data);
     }
 
     #[Route("/proj/about", name: 'proj_about')]
@@ -28,6 +28,17 @@ class ProjectController extends AbstractController
         ];
 
         return $this->render('project/about.html.twig', $data);
+    }
+
+    #[Route("/proj/game", name: 'blackjack_form')]
+    public function projGame(): Response
+    {
+
+        $data = [
+            'name' => 'Black Jack'
+        ];
+
+        return $this->render('project/addBook.html.twig', $data);
     }
 
 }

@@ -1,0 +1,19 @@
+{% extends "project/base.html.twig" %}
+
+{% block title %}Black Jack{% endblock %}
+
+{% block content %}
+
+<div class="container">
+	<div class="content-section-blackjack">
+		<div class="content">
+			<div class="button mt-[30px] flex justify-center">
+				<a href="{{ path("blackjack_form") }}" class="bg-amber-500 hover:bg-amber-600 text-black text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors">Start Game</a>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+{% endblock %}
+
