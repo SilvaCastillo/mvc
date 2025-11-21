@@ -24,7 +24,7 @@ class Hand
         $this->bet = $bet;
     }
 
-    public function addCard(Card $card): void
+    public function addCard(CardGraphic $card): void
     {
         $this->cards[] = $card;
     }
@@ -73,11 +73,14 @@ class Hand
 
     public function isBlackJack(): bool
     {
-        $value = $this->getValue();
+        // $value = $this->getValue();
 
-        if ($value = 21) {
-            return true;
-        }
+
+        // if ($this->getValue() === 21) {
+        //     return true;
+        // }
+
+        return $this->getValue() === 21;
 
     }
 
