@@ -8,6 +8,10 @@ use App\Card\CardGraphic;
 use App\Card\Card;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @SuppressWarnings("PHPMD.TooManyPublicMethods")
+ */
+
 class HandTest extends TestCase
 {
     private DeckOfCards $deckOfCards;
@@ -51,6 +55,17 @@ class HandTest extends TestCase
         $this->hand->hit($this->deckOfCards);
         $this->assertCount(3, $this->hand->getCards());
     }
+
+
+    public function testHitWhenNoMoreCards(): void
+    {
+        $this->expectException(\UnderflowException::class);
+        $this->expectExceptionMessage('Deck is empty!');
+
+        $this->deckOfCards->draw(50);
+        $this->hand->hit($this->deckOfCards);
+    }
+
 
     public function testStandTrue(): void
     {
@@ -113,7 +128,7 @@ class HandTest extends TestCase
         $this->assertTrue($hand->isBlackJack());
     }
 
-    public function testIsBusted(): void
+    public function testIsBustedTrue(): void
     {
         $card1 = new Card('6', 'H');
         $card2 = new Card('K', 'D');
@@ -124,5 +139,18 @@ class HandTest extends TestCase
         $hand = new Hand($cards, 100);
 
         $this->assertTrue($hand->isBusted());
+    }
+
+
+    public function testIsBustedFalse(): void
+    {
+        $card1 = new Card('6', 'H');
+        $card2 = new Card('A', 'D');
+
+        $cards = [$card1, $card2];
+
+        $hand = new Hand($cards, 100);
+
+        $this->assertFalse($hand->isBusted());
     }
 }

@@ -73,13 +73,6 @@ class Hand
 
     public function isBlackJack(): bool
     {
-        // $value = $this->getValue();
-
-
-        // if ($this->getValue() === 21) {
-        //     return true;
-        // }
-
         return $this->getValue() === 21;
 
     }
