@@ -26,8 +26,6 @@ class BlackJackGameTest extends TestCase
     {
         $playerHands = $this->blackJG->getPlayerHands();
         $this->assertCount(3, $playerHands);
-        foreach ($playerHands as $hand) {
-        }
 
         $dealerHand = $this->blackJG->getDealer();
         $this->assertCount(0, $dealerHand->getCards());
@@ -47,6 +45,41 @@ class BlackJackGameTest extends TestCase
 
         $dealerHand = $this->blackJG->getDealer();
         $this->assertCount(2, $dealerHand->getCards());
+    }
+
+
+    public function testCheckForBlackJacks(): void
+    {
+
+        $this->blackJG = new BlackJackGame("Jack");
+        $this->blackJG->startRound([100]);
+
+        $card1 = new CardGraphic('Q', 'H');
+        $card2 = new CardGraphic('A', 'D');
+
+        $cards = [$card1, $card2];
+
+        $hand = $this->blackJG->getPlayerHands()[0];
+        $hand->addCard($card1);
+        $hand->addCard($card2);
+
+        $this->blackJG->checkForBlackJacks();
+
+        $this->assertTrue($hand->isStanding());
+    }
+
+
+    public function testActionByPlayerReturnNull(): void
+    {
+
+        $playerHands = $this->blackJG->getPlayerHands();
+        $this->blackJG->actionByPlayer(0, "stand");
+        $this->blackJG->actionByPlayer(1, "stand");
+        $this->blackJG->actionByPlayer(2, "stand");
+
+        foreach ($playerHands as $hand) {
+            $this->assertTrue($hand->isStanding());
+        }
     }
 
 }

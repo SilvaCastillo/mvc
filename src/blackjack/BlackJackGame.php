@@ -46,6 +46,15 @@ class BlackJackGame
         }
     }
 
+    public function checkForBlackJacks(): void
+    {
+        foreach ($this->playerHands as $hand) {
+            if ($hand->isBlackJack()) {
+                $hand->stand();
+            }
+        }
+    }
+
     public function drawStartCardsForTable(): void
     {
         for ($i = 0; $i < 2; $i++) {
@@ -56,5 +65,46 @@ class BlackJackGame
             $dealerCards = $this->deck->draw();
             $this->dealer->addCards($dealerCards);
         }
+
+        $this->checkForBlackJacks();
+
+    }
+
+    public function actionByPlayer(int $handIndex, string $action): void
+    {
+        $hand = $this->playerHands[$handIndex];
+
+        if ($hand->isBusted() or $hand->isStanding()) {
+            return;
+        }
+
+        if ($action === "hit") {
+            $hand->hit($this->deck);
+
+            if ($hand->isBusted()) {
+                $hand->stand();
+            }
+        } elseif ($action === "stand") {
+            $hand->stand();
+
+        }
+    }
+
+
+    public function actionByDealer(): void
+    {
+        $counter = 0;
+
+        foreach ($this->playerHands as $hand) {
+            if ($hand->isBusted()) {
+                $counter++;
+            }
+        }
+
+        if ($counter === 0) {
+            return;
+        }
+
+        $this->dealer->drawUntil17($this->deck);
     }
 }
