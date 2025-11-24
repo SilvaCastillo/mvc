@@ -101,7 +101,7 @@ class BlackJackGame
             }
         }
 
-        if ($counter === 0) {
+        if ($counter === count($this->playerHands)) {
             return;
         }
 

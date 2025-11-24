@@ -34,7 +34,6 @@ class BlackJackGameTest extends TestCase
 
     public function testDrawStartCardsForTable(): void
     {
-
         $this->blackJG->drawStartCardsForTable();
 
         $playerHands = $this->blackJG->getPlayerHands();
@@ -50,7 +49,6 @@ class BlackJackGameTest extends TestCase
 
     public function testCheckForBlackJacks(): void
     {
-
         $this->blackJG = new BlackJackGame("Jack");
         $this->blackJG->startRound([100]);
 
@@ -69,9 +67,8 @@ class BlackJackGameTest extends TestCase
     }
 
 
-    public function testActionByPlayerReturnNull(): void
+    public function testActionByPlayerStand(): void
     {
-
         $playerHands = $this->blackJG->getPlayerHands();
         $this->blackJG->actionByPlayer(0, "stand");
         $this->blackJG->actionByPlayer(1, "stand");
@@ -81,5 +78,57 @@ class BlackJackGameTest extends TestCase
             $this->assertTrue($hand->isStanding());
         }
     }
+
+    public function testActionByPlayerReturnNull(): void
+    {
+        $hand = $this->blackJG->getPlayerHands()[0];
+        $hand->stand();
+
+        $hand = $this->blackJG->actionByPlayer(0, "stand");
+        $this->assertNull($hand);
+    }
+
+    public function testActionByPlayerHitAnBusted(): void
+    {
+        $this->blackJG = new BlackJackGame("Jack");
+        $this->blackJG->startRound([100]);
+
+        $card1 = new CardGraphic('Q', 'H');
+        $card2 = new CardGraphic('A', 'D');
+
+        $cards = [$card1, $card2];
+
+        $hand = $this->blackJG->getPlayerHands()[0];
+        $hand->addCard($card1);
+        $hand->addCard($card2);
+
+        $this->blackJG->actionByPlayer(0, "hit");
+
+        $this->assertTrue($hand->isStanding());
+    }
+
+
+    public function testActionByDealerDrawsWh(): void
+    {
+
+        $this->blackJG->actionByDealer();
+
+        $dealerHand = $this->blackJG->getDealer();
+
+        $this->assertGreaterThanOrEqual(17, $dealerHand);
+    }
+
+
+    public function testActionByDealerDraw(): void
+    {
+
+        $this->blackJG->actionByDealer();
+
+        $dealerHand = $this->blackJG->getDealer();
+
+        $this->assertGreaterThanOrEqual(17, $dealerHand);
+    }
+
+
 
 }
