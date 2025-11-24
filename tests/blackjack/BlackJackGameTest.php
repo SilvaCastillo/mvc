@@ -55,7 +55,6 @@ class BlackJackGameTest extends TestCase
         $card1 = new CardGraphic('Q', 'H');
         $card2 = new CardGraphic('A', 'D');
 
-        $cards = [$card1, $card2];
 
         $hand = $this->blackJG->getPlayerHands()[0];
         $hand->addCard($card1);
@@ -88,47 +87,62 @@ class BlackJackGameTest extends TestCase
         $this->assertNull($hand);
     }
 
-    public function testActionByPlayerHitAnBusted(): void
+    public function testActionByPlayerHitAndBusted(): void
     {
-        $this->blackJG = new BlackJackGame("Jack");
-        $this->blackJG->startRound([100]);
+        $blackJG = new BlackJackGame("Jack");
+        $blackJG->startRound([100]);
 
         $card1 = new CardGraphic('Q', 'H');
         $card2 = new CardGraphic('A', 'D');
+        $card3 = new CardGraphic('K', 'C');
 
-        $cards = [$card1, $card2];
 
-        $hand = $this->blackJG->getPlayerHands()[0];
+        $hand = $blackJG->getPlayerHands()[0];
         $hand->addCard($card1);
         $hand->addCard($card2);
+        $hand->addCard($card3);
 
-        $this->blackJG->actionByPlayer(0, "hit");
+
+        $blackJG->actionByPlayer(0, "hit");
 
         $this->assertTrue($hand->isStanding());
     }
 
 
-    public function testActionByDealerDrawsWh(): void
+    public function testActionByDealerAllPlayersBusted(): void
+    {
+        $blackJG = new BlackJackGame("Jack");
+        $blackJG->startRound([100]);
+
+        $card1 = new CardGraphic('Q', 'H');
+        $card2 = new CardGraphic('8', 'D');
+        $card3 = new CardGraphic('K', 'C');
+
+        $hand = $blackJG->getPlayerHands()[0];
+        $hand->addCard($card1);
+        $hand->addCard($card2);
+        $hand->addCard($card3);
+
+        $dealer = $blackJG->getDealer();
+        $dealerValueBefore = $dealer->getValue();
+
+        $blackJG->actionByDealer();
+
+        $dealerValueAfter = $dealer->getValue();
+
+
+        $this->assertEquals($dealerValueBefore, $dealerValueAfter);
+    }
+
+
+    public function testActionByDealerDrawsTo(): void
     {
 
         $this->blackJG->actionByDealer();
 
-        $dealerHand = $this->blackJG->getDealer();
+        $dealerHand = $this->blackJG->getDealer()->getValue();
 
         $this->assertGreaterThanOrEqual(17, $dealerHand);
     }
-
-
-    public function testActionByDealerDraw(): void
-    {
-
-        $this->blackJG->actionByDealer();
-
-        $dealerHand = $this->blackJG->getDealer();
-
-        $this->assertGreaterThanOrEqual(17, $dealerHand);
-    }
-
-
 
 }
