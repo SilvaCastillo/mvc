@@ -2,18 +2,20 @@
 
 namespace App\blackjack;
 
-use App\blackjack\Hand;
-use App\blackjack\Dealer;
 use App\blackjack\BlackJackGame;
-use App\Card\DeckOfCards;
 use App\Card\CardGraphic;
-use App\Card\Card;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @SuppressWarnings("PHPMD.TooManyPublicMethods")
+ */
 class BlackJackGameTest extends TestCase
 {
     private BlackJackGame $blackJG;
-    private $bets = [100, 50, 300];
+    /**
+     * @var int[]
+     */
+    private array $bets = [100, 50, 300];
 
     protected function setUp(): void
     {
@@ -49,12 +51,8 @@ class BlackJackGameTest extends TestCase
 
     public function testCheckForBlackJacks(): void
     {
-        $this->blackJG = new BlackJackGame("Jack");
-        $this->blackJG->startRound([100]);
-
         $card1 = new CardGraphic('Q', 'H');
         $card2 = new CardGraphic('A', 'D');
-
 
         $hand = $this->blackJG->getPlayerHands()[0];
         $hand->addCard($card1);
@@ -83,31 +81,30 @@ class BlackJackGameTest extends TestCase
         $hand = $this->blackJG->getPlayerHands()[0];
         $hand->stand();
 
-        $hand = $this->blackJG->actionByPlayer(0, "stand");
-        $this->assertNull($hand);
+        $cardsBefore = count($hand->getCards());
+
+        $this->blackJG->actionByPlayer(0, "hit");
+
+        $cardsAfter = count($hand->getCards());
+
+        $this->assertEquals($cardsBefore, $cardsAfter);
     }
 
     public function testActionByPlayerHitAndBusted(): void
     {
-        $blackJG = new BlackJackGame("Jack");
-        $blackJG->startRound([100]);
-
         $card1 = new CardGraphic('Q', 'H');
         $card2 = new CardGraphic('A', 'D');
         $card3 = new CardGraphic('K', 'C');
 
-
-        $hand = $blackJG->getPlayerHands()[0];
+        $hand = $this->blackJG->getPlayerHands()[0];
         $hand->addCard($card1);
         $hand->addCard($card2);
         $hand->addCard($card3);
 
-
-        $blackJG->actionByPlayer(0, "hit");
+        $this->blackJG->actionByPlayer(0, "hit");
 
         $this->assertTrue($hand->isStanding());
     }
-
 
     public function testActionByDealerAllPlayersBusted(): void
     {
@@ -130,14 +127,11 @@ class BlackJackGameTest extends TestCase
 
         $dealerValueAfter = $dealer->getValue();
 
-
         $this->assertEquals($dealerValueBefore, $dealerValueAfter);
     }
 
-
     public function testActionByDealerDrawsTo(): void
     {
-
         $this->blackJG->actionByDealer();
 
         $dealerHand = $this->blackJG->getDealer()->getValue();
@@ -145,4 +139,137 @@ class BlackJackGameTest extends TestCase
         $this->assertGreaterThanOrEqual(17, $dealerHand);
     }
 
+    public function testPayoutCalculateHandBusted(): void
+    {
+        $card1 = new CardGraphic('Q', 'H');
+        $card2 = new CardGraphic('8', 'D');
+        $card3 = new CardGraphic('K', 'C');
+
+        $hand = $this->blackJG->getPlayerHands()[0];
+        $hand->addCard($card1);
+        $hand->addCard($card2);
+        $hand->addCard($card3);
+
+        $dealerValue = 17;
+        $dealerBusted = false;
+
+        $payout = $this->blackJG->payoutCalculate($hand, $dealerValue, $dealerBusted);
+
+        $this->assertEquals(0, $payout);
+    }
+
+    public function testPayoutCalculateHandBlackJack(): void
+    {
+        $card1 = new CardGraphic('Q', 'H');
+        $card2 = new CardGraphic('A', 'D');
+        $card3 = new CardGraphic('K', 'C');
+
+        $hand = $this->blackJG->getPlayerHands()[0];
+        $hand->addCard($card1);
+        $hand->addCard($card2);
+        $hand->addCard($card3);
+        $handExpectedWins = $hand->getBet() * 2.5;
+
+        $dealerValue = 17;
+        $dealerBusted = false;
+
+        $payout = $this->blackJG->payoutCalculate($hand, $dealerValue, $dealerBusted);
+
+        $this->assertEquals($handExpectedWins, $payout);
+    }
+
+    public function testPayoutCalculateDealerBusted(): void
+    {
+
+        $card1 = new CardGraphic('Q', 'H');
+        $card2 = new CardGraphic('K', 'D');
+
+        $hand = $this->blackJG->getPlayerHands()[0];
+        $hand->addCard($card1);
+        $hand->addCard($card2);
+
+        $handExpectedWins = $hand->getBet() * 2;
+
+        $dealerValue = 25;
+        $dealerBusted = true;
+
+        $payout = $this->blackJG->payoutCalculate($hand, $dealerValue, $dealerBusted);
+
+        $this->assertEquals($handExpectedWins, $payout);
+    }
+
+    public function testPayoutCalculateHandMoreThanDealerHand(): void
+    {
+        $card1 = new CardGraphic('Q', 'H');
+        $card2 = new CardGraphic('K', 'D');
+
+        $hand = $this->blackJG->getPlayerHands()[0];
+        $hand->addCard($card1);
+        $hand->addCard($card2);
+
+        $handExpectedWins = $hand->getBet() * 2;
+
+        $dealerValue = 17;
+        $dealerBusted = false;
+
+        $payout = $this->blackJG->payoutCalculate($hand, $dealerValue, $dealerBusted);
+
+        $this->assertEquals($handExpectedWins, $payout);
+    }
+
+    public function testPayoutCalculateHandLessThanDealerHand(): void
+    {
+        $card1 = new CardGraphic('4', 'H');
+        $card2 = new CardGraphic('K', 'D');
+
+        $hand = $this->blackJG->getPlayerHands()[0];
+        $hand->addCard($card1);
+        $hand->addCard($card2);
+
+        $dealerValue = 17;
+        $dealerBusted = false;
+
+        $payout = $this->blackJG->payoutCalculate($hand, $dealerValue, $dealerBusted);
+
+        $this->assertEquals(0, $payout);
+    }
+
+    public function testPayoutCalculateHandEqualToDealerHand(): void
+    {
+        $card1 = new CardGraphic('Q', 'H');
+        $card2 = new CardGraphic('K', 'D');
+
+        $hand = $this->blackJG->getPlayerHands()[0];
+        $hand->addCard($card1);
+        $hand->addCard($card2);
+
+        $dealerValue = 20;
+        $dealerBusted = false;
+
+        $payout = $this->blackJG->payoutCalculate($hand, $dealerValue, $dealerBusted);
+
+        $this->assertEquals(100, $payout);
+    }
+
+    public function testFinishRound(): void
+    {
+        $blackJG = new BlackJackGame("Jack");
+        $blackJG->startRound([100]);
+
+        $card1 = new CardGraphic('7', 'H');
+        $card2 = new CardGraphic('K', 'D');
+
+        $hand = $blackJG->getPlayerHands()[0];
+        $hand->addCard($card1);
+        $hand->addCard($card2);
+
+        $dealerHand = $blackJG->getDealer();
+        $dealerHand->addCard(new CardGraphic('8', 'S'));
+        $dealerHand->addCard(new CardGraphic('9', 'C'));
+
+        $blackJG->finishRound();
+        $newBalance = $blackJG->getBalance();
+
+        $this->assertEquals(1000, $newBalance);
+    }
 }

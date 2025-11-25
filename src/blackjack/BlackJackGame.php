@@ -12,6 +12,7 @@ class BlackJackGame
     private BankAccount $player;
     private Dealer $dealer;
     private DeckOfCards $deck;
+    /** @var Hand[] */
     private array $playerHands;
 
     public function __construct(string $playerName, int $startBalance = 1000)
@@ -24,6 +25,9 @@ class BlackJackGame
         $this->playerHands = [];
     }
 
+    /**
+     * @return array<int, hand>
+     */
     public function getPlayerHands(): array
     {
         return $this->playerHands;
@@ -34,15 +38,24 @@ class BlackJackGame
         return $this->dealer->getHand();
     }
 
-    public function getDeck(): array
+    public function getDeck(): DeckOfCards
     {
         return $this->deck;
     }
 
+    public function getBalance(): int
+    {
+        return $this->player->getBalance();
+    }
+
+    /**
+     * @param array<int, int> $bets
+     */
     public function startRound(array $bets): void
     {
         foreach ($bets as $bet) {
             $this->playerHands[] = new Hand([], $bet);
+            $this->player->placeBets($bet);
         }
     }
 
@@ -63,7 +76,10 @@ class BlackJackGame
             }
 
             $dealerCards = $this->deck->draw();
-            $this->dealer->addCards($dealerCards);
+            if ($dealerCards !== null) {
+                $this->dealer->addCards($dealerCards);
+
+            }
         }
 
         $this->checkForBlackJacks();
@@ -106,5 +122,46 @@ class BlackJackGame
         }
 
         $this->dealer->drawUntil17($this->deck);
+    }
+
+
+    public function payoutCalculate(Hand $hand, int $dealerValue, bool $dealerBusted): int
+    {
+        if ($hand->isBusted()) {
+            return 0;
+        }
+
+        if ($hand->isBlackJack() && $this->dealer->getHand()->isBlackJack()) {
+            return $hand->getBet();
+        }
+
+        if ($hand->isBlackJack()) {
+            return (int) ($hand->getBet() * 2.5);
+        }
+
+        if ($dealerBusted) {
+            return $hand->getBet() * 2;
+        }
+
+        if ($hand->getValue() > $dealerValue) {
+            return $hand->getBet() * 2;
+        }
+
+        if ($hand->getValue() < $dealerValue) {
+
+            return 0;
+        }
+
+        return  $hand->getBet();
+    }
+
+    public function finishRound(): void
+    {
+        $dealerValue = $this->dealer->getHand()->getValue();
+        $dealerBusted = $this->dealer->getHand()->isBusted();
+        foreach ($this->playerHands as $hand) {
+            $winnings = $this->payoutCalculate($hand, $dealerValue, $dealerBusted);
+            $this->player->addWinnings($winnings);
+        }
     }
 }
