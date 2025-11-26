@@ -114,7 +114,7 @@ class HandTest extends TestCase
         $this->assertEquals(21, $hand->getValue());
     }
 
-    public function testIsBlackJack(): void
+    public function testIsBlackJackFalse(): void
     {
 
         $card1 = new Card('Q', 'H');
@@ -125,7 +125,7 @@ class HandTest extends TestCase
 
         $hand = new Hand($cards, 100);
 
-        $this->assertTrue($hand->isBlackJack());
+        $this->assertFalse($hand->isBlackJack());
     }
 
     public function testIsBustedTrue(): void

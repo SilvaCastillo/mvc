@@ -162,12 +162,10 @@ class BlackJackGameTest extends TestCase
     {
         $card1 = new CardGraphic('Q', 'H');
         $card2 = new CardGraphic('A', 'D');
-        $card3 = new CardGraphic('K', 'C');
 
         $hand = $this->blackJG->getPlayerHands()[0];
         $hand->addCard($card1);
         $hand->addCard($card2);
-        $hand->addCard($card3);
         $handExpectedWins = $hand->getBet() * 2.5;
 
         $dealerValue = 17;
