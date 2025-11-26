@@ -1,0 +1,119 @@
+{% extends "project/base.html.twig" %}
+
+{% block title %}Card Game{% endblock %}
+
+{% block content %}
+
+<div class="container">
+	<div class="game-section">
+		<div class="card-table">
+			{% if gameOver %}
+			<div class="round-complete-modal fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 blackdrop-blur-sm">
+				<div class=" bg-gradient-to-b from-emerald-700 to-emerald-800 border-4 border-amber-400 p-8 rounded-2xl shadow-2xl text-center max-w-md mx-auto">
+					<h3 class="text-3xl font-bold text-amber-100 mb-6">
+						Round Complete
+					</h3>
+					{% if results %}
+					<div class="mb-6 space-y-3">
+						{% for i, result in results %}
+							{% if result == 0 %}
+							<div class="flex justify-between items-center bg-red-900/30 border-2 border-red-500 rounded-lg px-4 py-3">
+								<span class="text-gray-100 font-medium">Hand {{i + 1}}:</span>
+								<span class="text-red-400 font-bold text-xl">{{result}}</span>
+							</div>
+							{% else %}
+							<div class="flex justify-between items-center bg-amber-900/30 border-2 border-amber-500 rounded-lg px-4 py-3">
+								<span class="text-gray-100 font-medium">Hand {{i + 1}}:</span>
+								<span class="text-amber-400 font-bold text-xl">{{result}}</span>
+							</div>
+							{% endif %}
+						{% endfor %}
+						<div class="flex justify-between items-center bg-red-900/30 border-2 border-red-500 rounded-lg px-4 py-3">
+								<span class="text-gray-100 font-medium">Balance:</span>
+								<span class="text-gray-100 font-bold text-xl">{{balance}}</span>
+						</div>
+					</div>
+					{% endif %}
+
+					<div class="flex flex-col gap-4 mt-6">
+						<form method="post" action="{{path('card_drawn')}}">
+							<input type="hidden" name="new_round" value="1">
+							<button type="submit" class="bg-amber-500 hover:bg-amber-600 text-white text-base px-8 py-3 inline-block transition-colors"> New Round (Same Bets)
+									</button>
+						</form>
+						<a href="{{ path("blackjack_bet") }}" class="bg-emerald-600 hover:bg-emerald-700 text-white text-base px-8 py-3 inline-block transition-colors">Change Bets</a>
+						<a href="{{ path("proj") }}" class="text-gray-300 hover:text-white mt-2 text-sm inline-block transition-colors">End Game</a>
+					</div>
+
+				</div>
+			</div>
+			{% endif %}
+			<div class="mb-12">
+				<h3 class="text-center">Dealer Hand: </h3>
+				<div class="flex justify-center gap-1 flex-wrap">
+					{% if showDealerCards %}
+						<p class="text-center">Value: {{dealerHands.getValue()}}</p>
+
+						{% for card in dealerHands.getCards() %}
+							<div class="text-center bg-white border border-black rounded-lg border-solid m-1 py-8 px-6">
+								{% if '♥' in card.getAsString() or '♦' in card.getAsString() %}
+									<p class="text-red-600 text-xl">{{card.getAsString()}}</p>
+								{% else %}
+									<p class="text-black text-xl">{{card.getAsString()}}</p>
+								{% endif %}
+							</div>
+						{% endfor %}
+
+					{% else %}
+						<div class="text-center bg-white border border-black rounded-lg border-solid m-1 py-8 px-6">
+							{% if '♥' in dealerHands.getCards()[0].getAsString() or '♦' in dealerHands.getCards()[0].getAsString() %}
+								<p class="text-red-600 text-xl">{{dealerHands.getCards()[0].getAsString()}}</p>
+							{% else %}
+								<p class="text-black text-xl">{{dealerHands.getCards()[0].getAsString()}}</p>
+							{% endif %}
+						</div>
+
+						<div class="text-center bg-white border border-black rounded-lg border-solid m-1 py-8 px-6">
+							<p class="text-black text-xl">??</p>
+						</div>
+
+					{% endif %}
+					
+				</div>
+			</div>
+
+			<div class="flex justify-center gap-8 flex-wrap">
+				{% for hand in playerHands %}
+					<div class="text-center">
+						<div class="flex flex-row gap-1">
+							{% for card in hand.getCards() %}
+								<div class=" text-center bg-white border border-black rounded-lg border-solid m-1 py-8 px-6">
+									{% if '♥' in card.getAsString() or '♦' in card.getAsString() %}
+										<p class="text-red-600 text-xl">{{card.getAsString()}}</p>
+									{% else %}
+										<p class="text-black text-xl">{{card.getAsString()}}</p>
+									{% endif %}
+								</div>
+							{% endfor %}
+						</div>
+						<p>Value: {{hand.getValue()}}</p>
+						<p>Bet: {{hand.getBet()}}</p>
+
+						{% if loop.index0 == currentHandIndex and not gameOver %}
+							<form method="post" action="{{path('play_hand')}}" class="flex gap-2 justify-center">
+								<button type="submit" name="action" value="hit" class="bg-green-500 hover:bg-green-600 text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors"> Hit
+								</button>
+
+								<button type="submit" name="action" value="stand" class="bg-red-500 hover:bg-red-600 text-white text-[15px] tracking-[1.5px] px-10 py-3 no-underline inline-block transition-colors"> Stand
+								</button>
+							</form>
+						{% endif %}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+

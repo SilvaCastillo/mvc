@@ -1,0 +1,35 @@
+{% extends "project/base.html.twig" %}
+
+{% block title %}Bet per hand{% endblock %}
+
+{% block content %}
+
+<div class="container mb-16">
+			<form method="post" action="{{ path('card_drawn') }}" enctype="multipart/form-data" class="mx-auto max-w-md w-full px-4">
+				<div class="space-y-12 bg-emerald-800 text-gray-100 ring-1 ring-inset ring-emerald-600 border-2 rounded-2xl border-solid border-emerald-600">
+					<div class=" pb-12">
+						<h2 class="mt-8 text-center text-2xl font-semibold text-amber-100">Bet Setup</h2>
+						
+
+						<div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+							<h4 class="mt-8 sm:col-span-4 sm:col-start-2 font-semibold text-amber-100">Balance: {{balance}}</h4>
+							{% for i in 1.. amountOfHands %}
+								<div class="sm:col-span-4 sm:col-start-2">
+									<label for="bet-hand-{{ i }}" class="block text-sm/6 font-medium text-gray-100 mb-2">Bet hand {{ i }}</label>
+									<div class="mt-2">
+										<input id="bet-hand-{{ i }}" required type="number" name="bet-hand-{{ i }}" autocomplete="family-name" max= {{ balance }} class="block w-full rounded-md bg-gray-900 text-gray-100 ring-1 ring-inset ring-emerald-600 focus:ring-2 focus:ring-amber-500 px-3 py-1.5 text-base outline outline-1 -outline-offset-1 outline-emerald-600 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-amber-500 sm:text-sm/6" />
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+						<div class="mt-9 pr-8 flex items-center justify-end gap-x-6">
+							<a href="{{ path('proj') }}" 
+							<button type="button" class="px-5 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md text-sm/6 font-medium transition-colors ">Cancel</button></a>
+							<button type="submit" class="rounded-md bg-amber-500 px-5 py-2 text-sm font-semibold text-white shadow-xs hover:bg-amber-600focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 dark:bg-amber-600dark:shadow-none dark:focus-visible:outline-amber-600 transition-colors">Start</button>
+						</div>
+					</div>
+				</div>
+			</form>
+</div>
+
+{% endblock %}
