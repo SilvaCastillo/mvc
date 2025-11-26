@@ -53,6 +53,9 @@ class BlackJackGame
      */
     public function startRound(array $bets): void
     {
+        $this->playerHands = [];
+        $this->dealer->reset();
+
         foreach ($bets as $bet) {
             $this->playerHands[] = new Hand([], $bet);
             $this->player->placeBets($bet);
@@ -155,13 +158,20 @@ class BlackJackGame
         return  $hand->getBet();
     }
 
-    public function finishRound(): void
+    /**
+     * @return int[]
+     */
+    public function finishRound(): array
     {
         $dealerValue = $this->dealer->getHand()->getValue();
         $dealerBusted = $this->dealer->getHand()->isBusted();
+        $wins = [];
         foreach ($this->playerHands as $hand) {
             $winnings = $this->payoutCalculate($hand, $dealerValue, $dealerBusted);
             $this->player->addWinnings($winnings);
+            $wins[] = $winnings;
         }
+
+        return $wins;
     }
 }
