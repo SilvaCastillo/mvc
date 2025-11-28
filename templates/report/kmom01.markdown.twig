@@ -74,3 +74,26 @@ Min största TIL för detta moment är hur PhpMetrics och Scrutinizer fungerar o
 
 <a id="kmom07/10"></a>Kmom07/10
 ------------------------------
+
+## Krav 1
+För krav 1 ville jag skapa en tydligare casinokänsla på sidan. Jag valde en mörk bakgrundsfärg som grund, eftersom det ofta associeras med casinotema och gör att andra färger framträder bättre. För detaljer och accenter använde jag grönt och guld, då dessa färger både passar in visuellt och förstärker spelkänslan. Navbaren fick tre knappar: Hem, About och en tillbakaknapp som leder användaren till huvudsidan. Syftet var att göra navigeringen enkel och intuitiv, samtidigt som designen hålls konsekvent. Genom färgval, struktur och navigering skapade jag en stillren, men samtidigt tematiskt passande layout.
+
+## Krav 2
+För krav 2 valde jag att implementera spelet Blackjack. Jag började med att skapa en BankAccountklass eftersom jag ville att spelaren skulle ha ett saldo att satsa från. På så sätt kan man inte betta obegränsat, och vinster sparas under sessionen man spelar. Jag funderade först på att även lägga in insättningar och uttag, och strukturen för detta finns förberedd även om funktionen inte har stor påverkan ännu. Sessionshantering hade varit ett alternativ, men det var inget jag tänkte på från start.
+Efter detta, skapade jag en Handklass för att hantera korten spelaren har. Den behövde hålla koll på både kortens värden och själva kortobjekten. Jag lade till funktioner för hit, stand, samt kontroller för blackjack och bust, tillsammans med logik för det aktuella bettet. Tester skrevs löpande för att säkerställa att varje del fungerar korrekt.
+Därefter skrev jag en Dealerklass där huvudfunktionen är att dra kort tills Dealerhanden når 17 eller mer. Klassen liknar handklassen, men med specifik logik för dealerbeteendet. Slutligen skapade jag spelets huvudlogik i BlackJackGame. Till en början tänkte jag placera detta i controllern, men insåg snabbt att det hade lett till onödigt mycket kod och upprepningar. Därför placerade jag all spellogik i en separat klass för att hålla MVC-strukturen renare och mer lättunderhållen.
+
+## Krav 3
+För krav 3 hade jag redan lagt till badges för Coverage, Code quality och Buildstatus från föregående kursmoment. Jag uppdaterade textinnehållet för att beskriva vad sidan erbjuder och lade till en separat del som handlar om testning och kodkvalitet. Där förklarade jag vilka verktyg jag använde samt hur man kör testerna. Instruktioner för hur man klonar och startar projektet fanns sedan tidigare, så jag kompletterade främst med ny information.
+Jag skrev även tester för de nya delarna av Blackjackprojektet. Eftersom kortleken redan hade 100% kodtäckning behövde jag främst testa de nya klasserna som BankAccount, Hand, Dealer och BlackJackGame. Jag valde att skriva tester efter varje färdig funktion eller klass för att kontinuerligt verifiera att allt fungerade som tänkt. Detta gav en stabil utvecklingsprocess och gjorde det enklare att upptäcka fel tidigt.
+
+
+## Genomföring av projektet
+
+Projektet gick överlag bra att genomföra och jag fick upp farten ganska tidigt. Jag började med att skissa upp idéer kring hur de centrala klasserna skulle se ut, framför allt Handklassen samt Bank Account- och Dealerklasserna. Vid den tidpunkten hade jag ännu inte planerat BlackJackGameklassen i detalj, men jag började redan då tänka på funktioner som Payout, StartRound och en funktion för att dra startkort till bordet. Jag visste inte exakt vilken klass dessa funktioner skulle höra till, men de tog form efter hand när projektstrukturen klarnade.
+
+Testerna var den del som ställde till mest problem. Jag upplevde mycket upprepad kod, och även om jag använde vissa setupmetoder blev de relativt enkla eftersom funktionerna ofta krävde olika utgångslägen. Jag märkte också hur viktigt det var att skriva tester direkt efter varje färdig klass eller funktion för att säkerställa att allt fungerade som tänkt innan jag gick vidare. Detta arbetssätt gjorde det enklare att hitta fel tidigt och undvika att problemen växte sig större längre fram. Ett konkret misstag jag upptäckte  just tack vare testningen och det visuella gränssnittet, var att isBlackJack() var implementerad på fel sätt. Jag hade glömt att Blackjack endast gäller om handen består av två kort, vilket ledde till att mina tester accepterade tre kort som Blackjack. Detta korrigerades först efter att jag justerat funktionen och uppdaterat testerna.
+
+Utöver detta, flöt arbetet på bra. Jag hade templates från game21 sedan kursmoment innan, vilket sparade mycket tid då jag kunde återanvända templates och bara lägga till nya element som Dealerhanden och en overlay som visas när rundan är slut. Där kunde spelaren välja att fortsätta med samma bet, ändra bet eller avsluta.
+
+Sammanfattningsvis, tycker jag att projektet var rimligt och väl anpassat för kursen. Det erbjöd en lagom nivå av utmaning och gav samtidigt utrymme att utveckla och förbättra olika delar. Jag lärde mig mycket både kring strukturering av spellogik och kring testningens betydelse, särskilt hur värdefullt det är att testa kontinuerligt under utvecklingens gång.
