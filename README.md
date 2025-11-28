@@ -35,6 +35,7 @@ This application uses serval tools to maintain code quality:
 - **PHPStan** - Static analysis
 - **PHPMD** - Mess detector
 - **PHP-CS-Fixer** - Code style fixer
+- **PHPDocumentor** - Documentation generator
 
 All tools are installed with `composer install`
 
@@ -101,4 +102,10 @@ composer csfix
 
 ```bash
 composer phpmetrics
+```
+
+### Generate documentation
+
+```bash
+composer phpdoc
 ```
